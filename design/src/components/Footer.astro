@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import logo from '../assets/img/brand/logo-new-moto.png';
+import { site, contato, endereco, horarios, redes, marcas, zap } from '../data/site';
+
+const ano = new Date().getFullYear();
+
+const colunas = [
+  {
+    titulo: 'Catálogo',
+    links: [
+      { href: '#ofertas', rotulo: 'Ofertas da semana' },
+      { href: '#pecas', rotulo: 'Peças de reposição' },
+      { href: '#acessorios', rotulo: 'Acessórios' },
+      { href: '#chuva', rotulo: 'Roupas de chuva' },
+      { href: '#baus', rotulo: 'Baús e grelhas' },
+      { href: '#viseiras', rotulo: 'Viseiras' },
+    ],
+  },
+  {
+    titulo: 'Oficina',
+    links: [
+      { href: '#oficina', rotulo: 'Todos os serviços' },
+      { href: '#oficina', rotulo: 'Troca de óleo' },
+      { href: '#oficina', rotulo: 'Caixa de direção' },
+      { href: '#oficina', rotulo: 'Centragem de roda' },
+      { href: '#como-funciona', rotulo: 'Como funciona' },
+      { href: '#loja', rotulo: 'Sobre a loja' },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-white/8 bg-graphite-950">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-16">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+      <!-- Marca -->
+      <div>
+        <div class="flex items-center gap-3">
+          <Image src={logo} alt="" width={96} height={71} loading="lazy" class="h-12 w-auto" />
+          <span class="display text-2xl leading-none text-white">
+            New Moto <span class="text-moto-500">Point</span>
+          </span>
+        </div>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/55">
+          Loja completa de peças e acessórios com oficina própria na Av. Farrapos. Atendendo
+          motociclista e entregador de Porto Alegre desde {site.desde}.
+        </p>
+
+        <div class="mt-6 flex gap-3">
+          <a
+            href={redes.instagram}
+            target="_blank"
+            rel="noopener"
+            class="flex size-11 items-center justify-center rounded-lg border border-white/12 text-white/70 transition-all hover:border-moto-500 hover:bg-moto-500 hover:text-white"
+            aria-label={`Instagram ${redes.instagramHandle}`}
+          >
+            <Icone nome="instagram" class="size-5" />
+          </a>
+          <a
+            href={redes.facebook}
+            target="_blank"
+            rel="noopener"
+            class="flex size-11 items-center justify-center rounded-lg border border-white/12 text-white/70 transition-all hover:border-moto-500 hover:bg-moto-500 hover:text-white"
+            aria-label="Facebook da New Moto Point"
+          >
+            <Icone nome="facebook" class="size-5" />
+          </a>
+          <a
+            href={zap()}
+            target="_blank"
+            rel="noopener"
+            class="flex size-11 items-center justify-center rounded-lg border border-white/12 text-white/70 transition-all hover:border-zap-500 hover:bg-zap-500 hover:text-graphite-950"
+            aria-label="WhatsApp da New Moto Point"
+          >
+            <Icone nome="whatsapp" class="size-5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Colunas de links -->
+      {
+        colunas.map((col) => (
+          <nav aria-label={col.titulo}>
+            <h3 class="display text-lg tracking-wider text-white">{col.titulo}</h3>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-white/55 transition-colors hover:text-moto-400"
+                  >
+                    {l.rotulo}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <!-- Contato -->
+      <div>
+        <h3 class="display text-lg tracking-wider text-white">Onde nos achar</h3>
+        <ul class="mt-4 space-y-3.5 text-sm">
+          <li class="flex gap-3">
+            <Icone nome="local" class="mt-0.5 size-4.5 shrink-0 text-moto-500" />
+            <span class="text-white/60">
+              {endereco.rua}<br />
+              <span class="text-white/40">{endereco.complemento}</span><br />
+              {endereco.bairro} · {endereco.cidade}/{endereco.estado}<br />
+              CEP {endereco.cep}
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <Icone nome="telefone" class="mt-0.5 size-4.5 shrink-0 text-moto-500" />
+            <span class="text-white/60">
+              <a href={contato.telefoneFixoHref} class="transition-colors hover:text-white">
+                {contato.telefoneFixo}
+              </a>
+              <br />
+              <a href={zap()} target="_blank" rel="noopener" class="transition-colors hover:text-white">
+                {contato.celular} (WhatsApp)
+              </a>
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <Icone nome="email" class="mt-0.5 size-4.5 shrink-0 text-moto-500" />
+            <a
+              href={`mailto:${contato.email}`}
+              class="break-all text-white/60 transition-colors hover:text-white"
+            >
+              {contato.email}
+            </a>
+          </li>
+          <li class="flex gap-3">
+            <Icone nome="relogio" class="mt-0.5 size-4.5 shrink-0 text-moto-500" />
+            <span class="text-white/60">
+              {
+                horarios.map((h) => (
+                  <span class="block">
+                    {h.dia}: {h.hora}
+                    {h.obs && <span class="text-white/40"> ({h.obs})</span>}
+                  </span>
+                ))
+              }
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Marcas atendidas -->
+    <div
+      class="mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-white/8 pt-8 text-xs"
+    >
+      <span class="font-semibold tracking-[0.18em] text-white/35 uppercase">Marcas atendidas</span>
+      {
+        marcas.map((m) => (
+          <span class="rounded-full border border-white/10 px-3 py-1 font-semibold text-white/55">
+            {m}
+          </span>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-8 flex flex-col gap-3 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {ano} {site.nome}. Todos os direitos reservados.</p>
+      <p>
+        Preços e disponibilidade sujeitos a alteração. Confirme no WhatsApp antes da compra.
+      </p>
+    </div>
+  </div>
+</footer>

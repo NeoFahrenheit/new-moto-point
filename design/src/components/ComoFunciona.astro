@@ -1,0 +1,61 @@
+---
+import Icone from './Icone.astro';
+import { etapas } from '../data/servicos';
+import { zap } from '../data/site';
+---
+
+<section id="como-funciona" class="relative overflow-hidden bg-moto-600 py-20 lg:py-24">
+  <div class="grid-texture absolute inset-0 opacity-30"></div>
+  <div
+    class="absolute -top-24 -right-24 size-[30rem] rounded-full bg-moto-400/25 blur-[120px]"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal max-w-2xl">
+      <p
+        class="flex items-center gap-3 text-xs font-bold tracking-[0.28em] text-white/70 uppercase"
+      >
+        <span class="skew-tag block h-3.5 w-1.5 bg-white"></span>
+        Como funciona
+      </p>
+      <h2 class="display mt-4 text-4xl text-white sm:text-5xl">
+        Do WhatsApp à moto pronta em <span class="italic">4 passos</span>
+      </h2>
+    </div>
+
+    <ol class="mt-14 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        etapas.map((e, i) => (
+          <li class="reveal relative" style={`--reveal-delay:${i * 90}ms`}>
+            <span class="display block text-6xl leading-none text-white/25">{e.n}</span>
+            <div class="mt-4 h-px w-full bg-white/25">
+              <span class="block h-px w-10 bg-white" />
+            </div>
+            <h3 class="display mt-5 text-2xl tracking-wide text-white">{e.titulo}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/75">{e.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="reveal mt-14 flex flex-col gap-4 border-t border-white/20 pt-9 sm:flex-row sm:items-center sm:justify-between">
+      <p class="display max-w-md text-2xl text-white sm:text-3xl">
+        Sua moto parada é dinheiro parado. Chama agora.
+      </p>
+      <a
+        href={zap()}
+        target="_blank"
+        rel="noopener"
+        class="group inline-flex shrink-0 items-center justify-center gap-2.5 rounded-xl bg-graphite-950 px-7 py-4 font-bold text-white transition-all hover:bg-zap-500 hover:text-graphite-950"
+      >
+        <Icone nome="whatsapp" class="size-5.5" />
+        Chamar no WhatsApp
+        <Icone
+          nome="seta"
+          class="size-5 transition-transform duration-300 group-hover:translate-x-1"
+        />
+      </a>
+    </div>
+  </div>
+</section>

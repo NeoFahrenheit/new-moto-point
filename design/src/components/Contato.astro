@@ -1,0 +1,187 @@
+---
+import Icone from './Icone.astro';
+import TituloSecao from './TituloSecao.astro';
+import { contato, endereco, horarios, redes, zap } from '../data/site';
+
+/** `numero: true` usa a tipografia condensada de display; texto longo fica no
+ *  corpo normal para não estourar a largura do cartão. */
+const canais = [
+  {
+    icone: 'whatsapp',
+    rotulo: 'WhatsApp',
+    valor: contato.celular,
+    href: zap(),
+    nota: 'Resposta mais rápida — orçamento e fotos',
+    numero: true,
+    destaque: true,
+  },
+  {
+    icone: 'telefone',
+    rotulo: 'Telefone da loja',
+    valor: contato.telefoneFixo,
+    href: contato.telefoneFixoHref,
+    nota: 'Durante o horário de atendimento',
+    numero: true,
+  },
+  {
+    icone: 'email',
+    rotulo: 'E-mail',
+    valor: contato.email,
+    href: `mailto:${contato.email}`,
+    nota: 'Para orçamentos de empresa e frota',
+    numero: false,
+  },
+  {
+    icone: 'instagram',
+    rotulo: 'Instagram',
+    valor: redes.instagramHandle,
+    href: redes.instagram,
+    nota: 'Novidades e chegadas de estoque',
+    numero: false,
+  },
+];
+---
+
+<section id="contato" class="bg-white py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <TituloSecao
+      claro
+      sobretitulo="Contato e localização"
+      titulo="Estamos na Av. Farrapos,"
+      destaque="esquina com a Hoffmann."
+      texto="Fácil de chegar e de estacionar a moto. Se preferir, resolva tudo pelo WhatsApp sem sair de casa."
+    />
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:gap-8">
+      <!-- Canais + horários -->
+      <div class="space-y-6">
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {
+            canais.map((c, i) => (
+              <li
+                class:list={['reveal', c.destaque && 'sm:col-span-2']}
+                style={`--reveal-delay:${i * 70}ms`}
+              >
+                <a
+                  href={c.href}
+                  target={c.href.startsWith('http') ? '_blank' : undefined}
+                  rel={c.href.startsWith('http') ? 'noopener' : undefined}
+                  class:list={[
+                    'group flex h-full items-start gap-4 rounded-2xl border p-5 transition-all',
+                    c.destaque
+                      ? 'border-zap-500/40 bg-zap-500/8 hover:border-zap-500 hover:bg-zap-500/14'
+                      : 'border-graphite-900/10 bg-graphite-50 hover:border-moto-500/40 hover:bg-white hover:shadow-lg hover:shadow-graphite-900/5',
+                  ]}
+                >
+                  <span
+                    class:list={[
+                      'flex size-11 shrink-0 items-center justify-center rounded-xl transition-colors',
+                      c.destaque
+                        ? 'bg-zap-500 text-graphite-950'
+                        : 'bg-graphite-900 text-white group-hover:bg-moto-500',
+                    ]}
+                  >
+                    <Icone nome={c.icone} class="size-5.5" />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-[11px] font-bold tracking-[0.18em] text-graphite-500 uppercase">
+                      {c.rotulo}
+                    </span>
+                    <span
+                      class:list={[
+                        'mt-1 block text-graphite-900',
+                        c.numero
+                          ? 'display text-2xl tracking-wide'
+                          : 'text-[15px] font-semibold break-all',
+                      ]}
+                    >
+                      {c.valor}
+                    </span>
+                    <span class="mt-1 block text-xs text-graphite-500">{c.nota}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <!-- Horários -->
+        <div class="reveal rounded-2xl bg-graphite-900 p-7 text-white">
+          <div class="flex items-center gap-3">
+            <Icone nome="relogio" class="size-5 text-moto-500" />
+            <h3 class="display text-2xl tracking-wide">Horário de atendimento</h3>
+          </div>
+          <dl class="mt-5 divide-y divide-white/10">
+            {
+              horarios.map((h) => (
+                <div class="flex items-baseline justify-between gap-4 py-3">
+                  <dt class="text-sm text-white/60">{h.dia}</dt>
+                  <dd class="text-right">
+                    <span
+                      class:list={[
+                        'display text-xl tracking-wide',
+                        h.hora === 'Fechado' ? 'text-white/35' : 'text-white',
+                      ]}
+                    >
+                      {h.hora}
+                    </span>
+                    {h.obs && <span class="block text-[11px] text-white/40">{h.obs}</span>}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+
+      <!-- Endereço + mapa -->
+      <div class="reveal flex flex-col overflow-hidden rounded-2xl border border-graphite-900/10">
+        <div class="flex flex-wrap items-start justify-between gap-4 bg-graphite-50 p-6">
+          <div class="flex gap-4">
+            <span
+              class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-moto-500 text-white"
+            >
+              <Icone nome="local" class="size-5.5" />
+            </span>
+            <address class="text-sm leading-relaxed text-graphite-700 not-italic">
+              <strong class="display block text-2xl tracking-wide text-graphite-900">
+                {endereco.rua}
+              </strong>
+              {endereco.complemento}<br />
+              Bairro {endereco.bairro} · {endereco.cidade}/{endereco.estado}<br />
+              CEP {endereco.cep}
+            </address>
+          </div>
+          <a
+            href={endereco.mapsDirecoes}
+            target="_blank"
+            rel="noopener"
+            class="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-graphite-900 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-moto-500"
+          >
+            Traçar rota
+            <Icone
+              nome="setaCurta"
+              class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
+        </div>
+
+        <!-- Enquanto o mapa carrega (ou se for bloqueado), aparece o aviso abaixo -->
+        <div class="relative flex min-h-80 flex-1 items-center justify-center bg-graphite-100">
+          <p class="absolute px-6 text-center text-sm text-graphite-500">
+            Carregando o mapa… se não aparecer, use o botão <strong class="font-semibold"
+              >Traçar rota</strong
+            >.
+          </p>
+          <iframe
+            src={endereco.mapsEmbed}
+            title="Mapa com a localização da New Moto Point na Av. Farrapos, 1255, Porto Alegre"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="absolute inset-0 size-full border-0 grayscale-[0.35] transition-[filter] duration-500 hover:grayscale-0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

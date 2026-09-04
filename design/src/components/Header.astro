@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import logo from '../assets/img/brand/logo-new-moto.png';
+import { site, contato, zap } from '../data/site';
+
+const nav = [
+  { href: '#ofertas', rotulo: 'Ofertas' },
+  { href: '#oficina', rotulo: 'Oficina' },
+  { href: '#pecas', rotulo: 'Peças' },
+  { href: '#acessorios', rotulo: 'Acessórios' },
+  { href: '#loja', rotulo: 'A loja' },
+  { href: '#contato', rotulo: 'Contato' },
+];
+---
+
+<header
+  id="topo"
+  class="sticky top-0 z-50 border-b border-white/8 bg-graphite-950/85 backdrop-blur-lg"
+>
+  <!-- Faixa de utilidades -->
+  <div class="hidden border-b border-white/6 bg-graphite-950 lg:block">
+    <div
+      class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-2 text-[13px] text-white/60"
+    >
+      <p class="flex items-center gap-2">
+        <Icone nome="local" class="size-4 text-moto-400" />
+        Av. Farrapos, 1255 — Floresta, Porto Alegre/RS
+      </p>
+      <div class="flex items-center gap-6">
+        <span class="flex items-center gap-2">
+          <Icone nome="relogio" class="size-4 text-moto-400" />
+          Seg a sex 8h–18h · Sáb 9h–17h
+        </span>
+        <a
+          href={contato.telefoneFixoHref}
+          class="flex items-center gap-2 transition-colors hover:text-white"
+        >
+          <Icone nome="telefone" class="size-4 text-moto-400" />
+          {contato.telefoneFixo}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
+    <a
+      href="#topo"
+      class="group flex shrink-0 items-center gap-3"
+      aria-label={`${site.nome} — início`}
+    >
+      <Image
+        src={logo}
+        alt=""
+        width={112}
+        height={83}
+        loading="eager"
+        class="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
+      />
+      <span class="hidden sm:block">
+        <span class="display block text-xl leading-none tracking-wide text-white">
+          New Moto <span class="text-moto-500">Point</span>
+        </span>
+        <span
+          class="mt-0.5 block text-[10.5px] font-semibold tracking-[0.22em] text-white/45 uppercase"
+        >
+          Peças · Acessórios · Oficina
+        </span>
+      </span>
+    </a>
+
+    <nav class="ml-auto hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="display rounded-md px-3.5 py-2 text-[17px] tracking-wide text-white/70 transition-colors hover:bg-white/6 hover:text-white"
+          >
+            {item.rotulo}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={zap()}
+      target="_blank"
+      rel="noopener"
+      class="ml-auto flex items-center gap-2 rounded-lg bg-zap-500 px-4 py-2.5 text-sm font-bold text-graphite-950 shadow-lg shadow-zap-500/20 transition-all hover:bg-zap-400 hover:shadow-zap-500/30 lg:ml-0"
+    >
+      <Icone nome="whatsapp" class="size-5" />
+      <span class="hidden sm:inline">Falar no WhatsApp</span>
+      <span class="sm:hidden">WhatsApp</span>
+    </a>
+
+    <button
+      type="button"
+      id="btn-menu"
+      class="flex size-11 shrink-0 items-center justify-center rounded-lg border border-white/12 text-white transition-colors hover:bg-white/8 lg:hidden"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+    >
+      <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path id="icone-abrir" d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        <path id="icone-fechar" class="hidden" d="M6 6l12 12M18 6 6 18" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="menu-mobile" hidden class="border-t border-white/8 bg-graphite-900 lg:hidden">
+    <nav class="mx-auto max-w-7xl px-4 py-3 sm:px-6" aria-label="Navegação principal (mobile)">
+      <ul class="divide-y divide-white/6">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                data-fechar-menu
+                class="display flex items-center justify-between py-3.5 text-2xl text-white/85 transition-colors hover:text-moto-400"
+              >
+                {item.rotulo}
+                <Icone nome="seta" class="size-5 text-moto-500" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-4 grid gap-2 text-sm">
+        <a
+          href={contato.telefoneFixoHref}
+          class="flex items-center gap-2.5 rounded-lg bg-white/5 px-4 py-3 font-semibold text-white"
+        >
+          <Icone nome="telefone" class="size-4.5 text-moto-400" />
+          {contato.telefoneFixo}
+        </a>
+        <p class="flex items-center gap-2.5 px-4 text-white/55">
+          <Icone nome="relogio" class="size-4.5 text-moto-400" />
+          Seg a sex 8h–18h (fecha 13h–14h) · Sáb 9h–17h
+        </p>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('btn-menu');
+  const menu = document.getElementById('menu-mobile');
+  const iAbrir = document.getElementById('icone-abrir');
+  const iFechar = document.getElementById('icone-fechar');
+
+  function alternar(aberto: boolean) {
+    if (!btn || !menu) return;
+    menu.hidden = !aberto;
+    btn.setAttribute('aria-expanded', String(aberto));
+    btn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+    iAbrir?.classList.toggle('hidden', aberto);
+    iFechar?.classList.toggle('hidden', !aberto);
+  }
+
+  btn?.addEventListener('click', () => alternar(menu?.hidden !== false));
+  menu
+    ?.querySelectorAll('[data-fechar-menu]')
+    .forEach((a) => a.addEventListener('click', () => alternar(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.hidden === false) alternar(false);
+  });
+</script>

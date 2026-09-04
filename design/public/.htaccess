@@ -1,0 +1,116 @@
+# ---------------------------------------------------------------------------
+# New Moto Point — configuração de servidor
+# Hospedagem compartilhada Hostinger (LiteSpeed, compatível com Apache 2.4)
+#
+# Este arquivo é copiado automaticamente para dist/ no build e vai para a raiz
+# de public_html no deploy. Não precisa editar nada aqui no dia a dia, exceto
+# a escolha entre domínio com ou sem www, marcada mais abaixo.
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+ServerSignature Off
+DirectoryIndex index.html
+
+# --- Página de erro --------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------------------------
+# Segurança: o deploy é por Git, então o .git fica dentro de public_html.
+# Sem estas regras o código-fonte do site ficaria acessível pela web.
+# ---------------------------------------------------------------------------
+RedirectMatch 404 (?i)/\.git(/|$)
+RedirectMatch 404 (?i)/\.github(/|$)
+RedirectMatch 404 (?i)/(README\.md|package(-lock)?\.json|\.env.*)$
+
+<FilesMatch "(?i)^\.(?!well-known)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+
+# ---------------------------------------------------------------------------
+# HTTPS e domínio canônico
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Força HTTPS (o X-Forwarded-Proto cobre o proxy da Hostinger)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # ---------------------------------------------------------------------
+  # ESCOLHA UMA das duas opções abaixo, para o site responder em um único
+  # endereço. Precisa combinar com a variável SITE_URL usada no build.
+  # ---------------------------------------------------------------------
+
+  # OPÇÃO A (ativa) — sem www:  www.seusite.com.br -> seusite.com.br
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # OPÇÃO B — com www: comente as duas linhas acima e descomente estas três.
+  # A segunda condição evita redirecionar o domínio provisório da Hostinger.
+  # RewriteCond %{HTTP_HOST} !^www\. [NC]
+  # RewriteCond %{HTTP_HOST} !\.hostingersite\.com$ [NC]
+  # RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Compressão
+# ---------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE application/xml image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Cache
+#
+# Tudo em /_astro/ tem hash de conteúdo no nome do arquivo: se o conteúdo
+# muda, o nome muda. Por isso pode ser cacheado para sempre. O resto
+# (index.html, sitemap, og.jpg, favicons) precisa revalidar.
+# ---------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault              "access plus 1 hour"
+  ExpiresByType text/html     "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType text/plain    "access plus 1 day"
+  ExpiresByType image/svg+xml "access plus 7 days"
+  ExpiresByType image/webp    "access plus 7 days"
+  ExpiresByType image/jpeg    "access plus 7 days"
+  ExpiresByType image/png     "access plus 7 days"
+  ExpiresByType image/x-icon  "access plus 7 days"
+  ExpiresByType font/woff2    "access plus 1 year"
+</IfModule>
+
+<IfModule mod_setenvif.c>
+  SetEnvIf Request_URI "^/_astro/" CACHE_IMUTAVEL
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Sobrepõe o mod_expires apenas para os arquivos com hash
+  Header set Cache-Control "public, max-age=31536000, immutable" env=CACHE_IMUTAVEL
+
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header unset X-Powered-By
+  Header unset Server
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Tipos de arquivo e codificação
+# ---------------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/webp                  .webp
+  AddType image/avif                  .avif
+  AddType font/woff2                  .woff2
+  AddType image/svg+xml               .svg
+  AddType application/manifest+json   .webmanifest
+
+  AddDefaultCharset UTF-8
+  AddCharset UTF-8 .html .css .js .json .xml .txt .svg .webmanifest
+</IfModule>

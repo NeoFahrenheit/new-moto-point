@@ -1,0 +1,55 @@
+---
+interface Props {
+  sobretitulo: string;
+  titulo: string;
+  destaque?: string;
+  texto?: string;
+  centro?: boolean;
+  claro?: boolean;
+}
+
+const {
+  sobretitulo,
+  titulo,
+  destaque,
+  texto,
+  centro = false,
+  claro = false,
+} = Astro.props;
+---
+
+<div class:list={['reveal max-w-2xl', centro && 'mx-auto text-center']}>
+  <p
+    class:list={[
+      'flex items-center gap-3 text-xs font-bold tracking-[0.28em] uppercase',
+      centro && 'justify-center',
+      claro ? 'text-moto-600' : 'text-moto-500',
+    ]}
+  >
+    <span class="skew-tag block h-3.5 w-1.5 bg-moto-500"></span>
+    {sobretitulo}
+  </p>
+
+  <h2
+    class:list={[
+      'display mt-4 text-4xl sm:text-5xl lg:text-[3.5rem]',
+      claro ? 'text-graphite-900' : 'text-white',
+    ]}
+  >
+    {titulo}
+    {destaque && <span class="text-moto-500"> {destaque}</span>}
+  </h2>
+
+  {
+    texto && (
+      <p
+        class:list={[
+          'mt-5 text-[15px] leading-relaxed sm:text-base',
+          claro ? 'text-graphite-600' : 'text-white/55',
+        ]}
+      >
+        {texto}
+      </p>
+    )
+  }
+</div>

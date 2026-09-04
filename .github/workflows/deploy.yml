@@ -1,0 +1,111 @@
+name: Publicar na Hostinger
+
+# Compila o site e joga SÓ o resultado (o conteúdo de design/dist) na raiz do
+# branch `deploy`. A integração Git da Hostinger acompanha esse branch e clona
+# ele dentro de public_html — por isso o branch precisa conter apenas os
+# arquivos publicáveis, e nunca o código-fonte.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'design/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+# Um deploy por vez, para dois pushes seguidos não brigarem pelo mesmo branch.
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    name: Compilar e publicar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: design/package-lock.json
+
+      - name: Instalar dependências
+        working-directory: design
+        run: npm ci
+
+      - name: Conferir tipos e diagnósticos
+        working-directory: design
+        run: npx astro check
+
+      - name: Compilar
+        working-directory: design
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          if [ -z "${SITE_URL}" ]; then
+            echo "::error::A variável SITE_URL não está definida. Configure em Settings → Secrets and variables → Actions → Variables (ex.: https://newmotopoint.com.br)."
+            exit 1
+          fi
+          echo "Compilando para ${SITE_URL}"
+          npm run build
+
+      - name: Conferir se o build saiu completo
+        working-directory: design
+        run: |
+          for arquivo in index.html 404.html robots.txt sitemap-index.xml og.jpg .htaccess favicon.ico; do
+            if [ ! -f "dist/${arquivo}" ]; then
+              echo "::error::dist/${arquivo} não foi gerado."
+              exit 1
+            fi
+          done
+          echo "Arquivos conferidos. Tamanho do build: $(du -sh dist | cut -f1)"
+
+      - name: Publicar no branch deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          REMOTO="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          ALVO="${RUNNER_TEMP}/deploy"
+
+          git config --global user.name  'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # Mantemos o histórico do branch (sem force-push), porque a Hostinger
+          # atualiza public_html com `git pull` — reescrever histórico quebraria.
+          if git ls-remote --exit-code --heads "${REMOTO}" deploy >/dev/null 2>&1; then
+            git clone --branch deploy --single-branch --depth 1 "${REMOTO}" "${ALVO}"
+          else
+            echo "Branch deploy ainda não existe — criando."
+            git clone --depth 1 "${REMOTO}" "${ALVO}"
+            git -C "${ALVO}" checkout --orphan deploy
+            git -C "${ALVO}" rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          # Troca o conteúdo por inteiro, preservando só o .git, para arquivo
+          # renomeado ou removido no build desaparecer também do servidor.
+          find "${ALVO}" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+
+          # O ponto no fim do caminho leva os arquivos ocultos (.htaccess).
+          cp -a "${GITHUB_WORKSPACE}/design/dist/." "${ALVO}/"
+
+          cd "${ALVO}"
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "Build idêntico ao que já está publicado. Nada a enviar."
+            exit 0
+          fi
+
+          git commit -m "deploy: ${GITHUB_SHA:0:7}"
+          git push "${REMOTO}" deploy
+          echo "Enviado para o branch deploy. A Hostinger publica no próximo pull."

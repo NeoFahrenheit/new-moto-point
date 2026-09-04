@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+
+@import '@fontsource-variable/inter';
+@import '@fontsource/barlow-condensed/500.css';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
+@import '@fontsource/barlow-condensed/800.css';
+@import '@fontsource/barlow-condensed/700-italic.css';
+@import '@fontsource/barlow-condensed/800-italic.css';
+
+@theme {
+  /* ---- Superfícies (grafite) ---- */
+  --color-graphite-50: #f5f6f8;
+  --color-graphite-100: #e9ebef;
+  --color-graphite-950: #08090b;
+  --color-graphite-900: #0d0f13;
+  --color-graphite-850: #12151a;
+  --color-graphite-800: #171b22;
+  --color-graphite-700: #22272f;
+  --color-graphite-600: #333a45;
+  --color-graphite-500: #4b5563;
+
+  /* ---- Vermelho de marca ---- */
+  --color-moto-50: #fff1f2;
+  --color-moto-300: #fda4ab;
+  --color-moto-400: #f8535f;
+  --color-moto-500: #e5192b;
+  --color-moto-600: #c40f20;
+  --color-moto-700: #9e0c1a;
+
+  /* ---- Verde WhatsApp ---- */
+  --color-zap-400: #3ddc84;
+  --color-zap-500: #25d366;
+  --color-zap-600: #128c7e;
+
+  --font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-graphite-900);
+    color: #e7e9ec;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-moto-500);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-moto-400);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+/* Faixa diagonal vermelha usada como detalhe gráfico */
+@utility skew-tag {
+  transform: skewX(-12deg);
+}
+
+/* Malha de textura sutil sobre fundos escuros */
+@utility grid-texture {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Revelação ao rolar a página.
+   O estado escondido só existe dentro de `.js-reveal`, classe que o script
+   adiciona ao <html> depois de confirmar que consegue observar os elementos.
+   Sem JS, sem IntersectionObserver ou com movimento reduzido, o conteúdo
+   simplesmente aparece — nunca fica invisível. */
+@layer components {
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s var(--ease-out-quint),
+      transform 0.7s var(--ease-out-quint);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
