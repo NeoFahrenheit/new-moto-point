@@ -1,11 +1,27 @@
-# New Moto Point — site novo
+# New Moto Point — versão 2 (“Asfalto”)
 
-Redesenho do site da **New Moto Point**, loja de peças, acessórios e oficina de
-motos na Av. Farrapos, 1255 — Bairro Floresta, Porto Alegre/RS.
+Segunda proposta visual para o site da **New Moto Point**, loja de peças,
+acessórios e oficina de motos na Av. Farrapos, 1255 — Bairro Floresta, Porto
+Alegre/RS.
 
-Substitui o site atual em Google Sites
-(`sites.google.com/view/newmotopoint`), de onde foram extraídos todo o
-conteúdo, as fotos dos produtos, os serviços da oficina, os preços e os links.
+Mesmo conteúdo e mesma stack da versão 1 (branch `main`). O que muda é a
+linguagem visual: preto puro, vermelho em gradiente, cortes na diagonal e
+tipografia pesada e larga.
+
+## O que diferencia esta versão
+
+| | `main` (versão 1) | `versao-2-asfalto` |
+| --- | --- | --- |
+| Fundo | grafite azulado | preto puro (`carbon-950`) |
+| Vermelho | chapado | gradiente (`grad-rubi`) |
+| Título | Barlow Condensed (estreito, alto) | Montserrat 900 (largo, pesado) |
+| Cantos | arredondados (`rounded-2xl`) | retos (`rounded-sm`) |
+| Transição entre seções | linha reta | corte diagonal (`Corte.astro`) |
+| Abertura | manchete sobre foto de fundo | manchete ao lado de foto recortada |
+
+Blocos que só existem aqui, vindos da referência: a **faixa vermelha com os
+quatro diferenciais numerados**, a **galeria em mosaico** da bancada e a
+**faixa de socorro** (“Parou na rua?”) com foto em duotone.
 
 ## Stack
 
@@ -13,16 +29,12 @@ conteúdo, as fotos dos produtos, os serviços da oficina, os preços e os links
 | --- | --- | --- |
 | Framework | **Astro 7** | Site estático: HTML pronto no servidor, ótimo para SEO local e para celular. |
 | Estilo | **Tailwind CSS 4** | Tokens de marca no `@theme`, sem arquivo de config. |
-| Tipografia | **Barlow Condensed + Inter** (Fontsource) | Auto-hospedadas — sem requisição ao Google Fonts. |
+| Tipografia | **Montserrat + Inter** (Fontsource) | Auto-hospedadas — sem requisição ao Google Fonts. |
 | Imagens | `astro:assets` | WebP + `srcset` responsivo gerados no build. |
 | Linguagem | TypeScript | `astro check` sem erros. |
 
 O site publicado **não carrega nenhum arquivo JavaScript**: os dois scripts
 (menu do celular e revelação ao rolar) são pequenos e ficam embutidos no HTML.
-
-- `index.html`: ~19 KB comprimido
-- CSS: ~10 KB comprimido
-- Build inteiro: 4,5 MB, quase tudo imagem de produto já otimizada
 
 ## Rodando
 
@@ -40,8 +52,8 @@ compartilhamento. Sem ela o build avisa e usa um endereço de exemplo.
 
 ## Onde mexer no conteúdo
 
-Todo o texto e o catálogo estão em três arquivos — não é preciso tocar em
-componente para atualizar preço, produto ou serviço:
+Os dados são exatamente os mesmos das outras versões — trocar de branch não
+exige reescrever nada de conteúdo:
 
 | Arquivo | O que tem |
 | --- | --- |
@@ -73,6 +85,10 @@ public/              vai direto para a raiz do site
 src/
   assets/img/        fotos extraídas do site atual (otimizadas no build)
   components/        seções da página + Icone.astro (SVGs inline)
+    Corte.astro      o corte diagonal entre seções
+    Numeros.astro    faixa vermelha dos quatro diferenciais
+    Galeria.astro    mosaico de fotos da oficina
+    PrecisaAjuda.astro  faixa de socorro em duotone
   data/              conteúdo e catálogo
   layouts/Base.astro <head>, JSON-LD, header/footer, script de revelação
   pages/
@@ -88,16 +104,24 @@ Push na `main` compila e publica sozinho. O passo a passo da Hostinger, a
 configuração do Git no hPanel e a lista de problemas comuns estão em
 [../DEPLOY.md](../DEPLOY.md).
 
+> Para publicar **esta** versão em vez da `main`, ajuste o gatilho do workflow
+> em `.github/workflows/deploy.yml` (a lista `branches:`) ou faça o merge desta
+> branch na `main`.
+
 ## Decisões que valem saber
 
 - **Todo botão leva ao WhatsApp com a mensagem já escrita**, incluindo o nome e
-  o preço do produto ou o serviço a agendar. Era o principal atrito do site
-  antigo, que só mostrava fotos sem caminho para comprar.
+  o preço do produto ou o serviço a agendar.
 - **Dados estruturados `MotorcycleRepair`** em `Base.astro` (endereço, horários,
   geolocalização, redes) para aparecer melhor na busca local e no Maps.
 - **Nenhuma nota ou média de avaliação é afirmada.** Os dois depoimentos são
   transcrições das avaliações públicas do Google; as estrelas aparecem apenas
   por depoimento, que são de 5 estrelas.
+- **Os cortes diagonais são decorativos.** `Corte.astro` desenha um triângulo
+  sobreposto, nunca recorta a seção — nenhum texto some se a cor mudar.
+- **A faixa de socorro usa máscara, não recorte.** A foto se dissolve no
+  vermelho com `mask-image`; sem isso aparece uma emenda vertical no meio da
+  faixa.
 - **A animação de entrada é enfeite.** O estado escondido só é aplicado depois
   que o script confirma que consegue revelá-lo; sem JS, sem
   `IntersectionObserver` ou com `prefers-reduced-motion`, o conteúdo aparece
@@ -113,5 +137,4 @@ configuração do Git no hPanel e a lista de problemas comuns estão em
 - Falta preço de baús, grelhas e viseiras; hoje esses cartões mostram “Consulte
   o valor”.
 - O endereço final do site ainda não foi definido. Ele vem da variável
-  `SITE_URL` (veja [../DEPLOY.md](../DEPLOY.md)) — comece com o domínio
-  provisório da Hostinger e troque quando o domínio próprio estiver ativo.
+  `SITE_URL` (veja [../DEPLOY.md](../DEPLOY.md)).

@@ -18,26 +18,26 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={['reveal max-w-2xl', centro && 'mx-auto text-center']}>
+<div class:list={['reveal', centro ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl']}>
   <p
     class:list={[
-      'flex items-center gap-3 text-xs font-bold tracking-[0.28em] uppercase',
+      'rotulo flex items-center gap-3 text-[11px]',
       centro && 'justify-center',
-      claro ? 'text-moto-600' : 'text-moto-500',
+      claro ? 'text-rubi-600' : 'text-rubi-400',
     ]}
   >
-    <span class="skew-tag block h-3.5 w-1.5 bg-moto-500"></span>
+    <span class="hachura block h-2.5 w-8 bg-rubi-500"></span>
     {sobretitulo}
   </p>
 
   <h2
     class:list={[
-      'display mt-4 text-4xl sm:text-5xl lg:text-[3.5rem]',
-      claro ? 'text-graphite-900' : 'text-white',
+      'display mt-5 text-[2rem] sm:text-5xl lg:text-[3.25rem]',
+      claro ? 'text-carbon-950' : 'text-white',
     ]}
   >
     {titulo}
-    {destaque && <span class="text-moto-500"> {destaque}</span>}
+    {destaque && <span class="text-rubi-500"> {destaque}</span>}
   </h2>
 
   {
@@ -45,7 +45,8 @@ const {
       <p
         class:list={[
           'mt-5 text-[15px] leading-relaxed sm:text-base',
-          claro ? 'text-graphite-600' : 'text-white/55',
+          centro && 'mx-auto max-w-2xl',
+          claro ? 'text-carbon-600' : 'text-white/55',
         ]}
       >
         {texto}

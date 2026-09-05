@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import { fotos } from '../data/servicos';
+import { contato, zap } from '../data/site';
+---
+
+<!-- Faixa de socorro: o bloco mais direto da página. -->
+<section class="grad-rubi relative overflow-hidden" aria-label="Precisa de ajuda agora">
+  <!-- Foto em duotone sangrando pela direita. A máscara dissolve a borda
+       esquerda da imagem no vermelho: sem ela aparece uma emenda vertical. -->
+  <div
+    class="absolute inset-y-0 right-0 w-full lg:w-[58%]"
+    style="-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 55%);mask-image:linear-gradient(to right,transparent 0%,#000 55%)"
+  >
+    <Image
+      src={fotos.centragem}
+      alt=""
+      widths={[600, 1000, 1400]}
+      sizes="(min-width: 1024px) 58vw, 100vw"
+      loading="lazy"
+      decoding="async"
+      class="size-full object-cover opacity-55 grayscale"
+    />
+    <div class="grad-rubi absolute inset-0 opacity-55 mix-blend-multiply"></div>
+  </div>
+
+  <div class="hachura absolute inset-0 opacity-30"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+    <div class="reveal max-w-xl">
+      <p class="rotulo text-[11px] text-white/70">Parou na rua?</p>
+      <h2 class="display mt-4 text-3xl text-white sm:text-4xl lg:text-5xl">
+        Manda o problema no WhatsApp e a gente já responde
+      </h2>
+      <p class="mt-5 text-[15px] leading-relaxed text-white/80">
+        Diz o modelo da moto e o que está acontecendo. Se der para resolver na hora, a gente
+        resolve — e se precisar, buscamos a moto na região.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={zap('Olá! Minha moto deu problema. Modelo: ___ / O que está acontecendo: ')}
+          target="_blank"
+          rel="noopener"
+          class="group flex items-center justify-center gap-2.5 rounded-sm bg-carbon-950 px-7 py-4 font-extrabold tracking-wide text-white uppercase transition-all hover:bg-zap-500 hover:text-carbon-950"
+        >
+          <Icone nome="whatsapp" class="size-5.5" />
+          Chamar agora
+          <Icone
+            nome="seta"
+            class="size-5 transition-transform duration-300 group-hover:translate-x-1"
+          />
+        </a>
+        <a
+          href={contato.telefoneFixoHref}
+          class="flex items-center justify-center gap-2.5 rounded-sm border border-white/40 px-7 py-4 font-extrabold tracking-wide text-white uppercase transition-all hover:bg-white hover:text-rubi-600"
+        >
+          <Icone nome="telefone" class="size-5" />
+          {contato.telefoneFixo}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

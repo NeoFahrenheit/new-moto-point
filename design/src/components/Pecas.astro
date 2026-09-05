@@ -8,7 +8,7 @@ import { marcas, zap } from '../data/site';
 const oleos = vitrines.find((v) => v.id === 'oleos')!;
 ---
 
-<section id="pecas" class="bg-white py-20 lg:py-28">
+<section id="pecas" class="bg-carbon-50 py-20 lg:py-28">
   <div class="mx-auto max-w-7xl px-4 sm:px-6">
     <TituloSecao
       claro
@@ -18,30 +18,48 @@ const oleos = vitrines.find((v) => v.id === 'oleos')!;
       texto="Se a peça não estiver no estoque, a gente procura e avisa o prazo. Sem fazer você rodar a cidade atrás de fornecedor."
     />
 
-    <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14">
+    <div class="mt-12 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+      <!-- Óleos -->
+      <div>
+        <div class="reveal flex items-end justify-between gap-4 border-b border-carbon-950/12 pb-4">
+          <div>
+            <h3 class="display text-2xl text-carbon-950">{oleos.titulo}</h3>
+            <p class="mt-2 max-w-md text-sm leading-relaxed text-carbon-600">{oleos.descricao}</p>
+          </div>
+          <span class="grad-rubi rotulo hidden shrink-0 rounded-sm px-3.5 py-1.5 text-[10px] text-white sm:block">
+            Troca na hora
+          </span>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+          {oleos.itens.map((p, i) => <CardProduto produto={p} tema="claro" atraso={i * 70} />)}
+        </div>
+      </div>
+
       <!-- Linhas atendidas -->
       <div>
-        <div class="reveal rounded-2xl border border-graphite-900/10 bg-graphite-50 p-7">
-          <h3 class="display text-2xl tracking-wide text-graphite-900">O que temos em estoque</h3>
-          <ul class="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+        <div class="reveal border border-carbon-950/12 bg-white p-7">
+          <h3 class="display text-2xl text-carbon-950">O que temos em estoque</h3>
+
+          <ol class="mt-5 divide-y divide-carbon-950/8">
             {
-              linhasDePecas.map((l) => (
-                <li class="flex items-start gap-2.5 text-sm text-graphite-700">
-                  <Icone nome="check" class="mt-0.5 size-4 shrink-0 text-moto-500" />
-                  {l}
+              linhasDePecas.map((l, i) => (
+                <li class="flex items-center gap-4 py-2.5">
+                  <span class="rotulo w-6 shrink-0 text-[10px] text-rubi-500">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="text-sm text-carbon-700">{l}</span>
                 </li>
               ))
             }
-          </ul>
+          </ol>
 
-          <div class="mt-7 border-t border-graphite-900/10 pt-6">
-            <p class="text-[11px] font-bold tracking-[0.2em] text-graphite-500 uppercase">
-              Atendemos
-            </p>
+          <div class="mt-6 border-t border-carbon-950/12 pt-6">
+            <p class="rotulo text-[10px] text-carbon-500">Atendemos</p>
             <div class="mt-3 flex flex-wrap gap-2">
               {
                 marcas.map((m) => (
-                  <span class="display rounded-lg bg-graphite-900 px-3.5 py-1.5 text-lg tracking-wider text-white">
+                  <span class="display rounded-sm bg-carbon-950 px-3.5 py-1.5 text-base text-white">
                     {m}
                   </span>
                 ))
@@ -50,12 +68,10 @@ const oleos = vitrines.find((v) => v.id === 'oleos')!;
           </div>
 
           <a
-            href={zap(
-              'Olá! Estou procurando uma peça. Modelo da moto: ___ / Peça: ___. Vocês têm?',
-            )}
+            href={zap('Olá! Estou procurando uma peça. Modelo da moto: ___ / Peça: ___. Vocês têm?')}
             target="_blank"
             rel="noopener"
-            class="group mt-7 flex items-center justify-center gap-2.5 rounded-xl bg-moto-500 px-6 py-4 font-bold text-white shadow-lg shadow-moto-700/20 transition-all hover:bg-moto-600"
+            class="group mt-7 flex items-center justify-center gap-2.5 rounded-sm bg-carbon-950 px-6 py-4 font-extrabold tracking-wide text-white uppercase transition-all hover:bg-rubi-500"
           >
             <Icone nome="whatsapp" class="size-5" />
             Consultar uma peça
@@ -65,45 +81,31 @@ const oleos = vitrines.find((v) => v.id === 'oleos')!;
             />
           </a>
         </div>
-
-        <div
-          class="reveal mt-5 flex items-start gap-3.5 rounded-2xl bg-graphite-900 p-6 text-white"
-        >
-          <span
-            class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-moto-500 text-white"
-          >
-            <Icone nome="entrega" class="size-5.5" />
-          </span>
-          <div>
-            <h4 class="display text-xl tracking-wide">Tele entrega e busca</h4>
-            <p class="mt-1.5 text-sm leading-relaxed text-white/60">
-              Levamos a peça até você ou buscamos sua moto na região. Combine a taxa no
-              atendimento.
-            </p>
-          </div>
-        </div>
       </div>
+    </div>
 
-      <!-- Óleos -->
-      <div>
-        <div class="reveal flex items-end justify-between gap-4">
-          <div>
-            <h3 class="display text-2xl tracking-wide text-graphite-900">{oleos.titulo}</h3>
-            <p class="mt-2 max-w-md text-sm leading-relaxed text-graphite-600">
-              {oleos.descricao}
-            </p>
-          </div>
-          <span
-            class="hidden shrink-0 rounded-full bg-moto-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-moto-600 uppercase sm:block"
-          >
-            Troca na hora
-          </span>
-        </div>
-
-        <div class="mt-6 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
-          {oleos.itens.map((p, i) => <CardProduto produto={p} tema="claro" atraso={i * 70} />)}
-        </div>
+    <!-- Tele entrega -->
+    <div
+      class="grad-rubi reveal mt-10 flex flex-col items-start gap-5 p-7 sm:flex-row sm:items-center lg:p-9"
+    >
+      <span class="flex size-14 shrink-0 items-center justify-center rounded-sm bg-white/15 text-white">
+        <Icone nome="entrega" class="size-7" />
+      </span>
+      <div class="flex-1">
+        <h3 class="display text-2xl text-white sm:text-3xl">Tele entrega e busca da moto</h3>
+        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-white/80">
+          Levamos a peça até você ou buscamos sua moto na região. Combine a taxa no atendimento.
+        </p>
       </div>
+      <a
+        href={zap('Olá! Quero saber sobre tele entrega / busca da moto na região.')}
+        target="_blank"
+        rel="noopener"
+        class="flex shrink-0 items-center gap-2.5 rounded-sm bg-carbon-950 px-6 py-3.5 text-[13px] font-extrabold tracking-wider text-white uppercase transition-colors hover:bg-white hover:text-carbon-950"
+      >
+        <Icone nome="whatsapp" class="size-5" />
+        Combinar entrega
+      </a>
     </div>
   </div>
 </section>

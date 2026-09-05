@@ -8,17 +8,14 @@ import { zap } from '../data/site';
 const maiorOff = Math.max(...ofertas.map((o) => desconto(o) ?? 0));
 ---
 
-<section id="ofertas" class="relative overflow-hidden bg-graphite-900 py-20 lg:py-28">
-  <div
-    class="absolute top-0 left-1/2 h-px w-full max-w-4xl -translate-x-1/2 bg-linear-to-r from-transparent via-moto-500/50 to-transparent"
-  >
-  </div>
+<section id="ofertas" class="relative overflow-hidden bg-carbon-950 py-20 lg:py-28">
+  <div class="textura-pontos absolute inset-0 opacity-50"></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
     <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
       <TituloSecao
         sobretitulo="Ofertas da loja"
-        titulo="Luvas e roupas térmicas com até"
+        titulo="Luva e roupa térmica com até"
         destaque={`${maiorOff}% off`}
         texto="Estoque limitado, tamanhos e modelos conforme disponibilidade. Confirme no WhatsApp e retire na loja ou peça tele entrega."
       />
@@ -27,7 +24,7 @@ const maiorOff = Math.max(...ofertas.map((o) => desconto(o) ?? 0));
         href={zap('Olá! Quero saber quais ofertas ainda estão disponíveis na New Moto Point.')}
         target="_blank"
         rel="noopener"
-        class="reveal group inline-flex shrink-0 items-center gap-2.5 self-start rounded-xl border border-white/15 px-6 py-3.5 font-bold text-white transition-all hover:border-zap-500 hover:bg-zap-500 hover:text-graphite-950 lg:self-auto"
+        class="reveal group inline-flex shrink-0 items-center gap-2.5 self-start rounded-sm border border-white/18 px-6 py-3.5 text-[13px] font-extrabold tracking-wider text-white uppercase transition-all hover:border-zap-500 hover:bg-zap-500 hover:text-carbon-950 lg:self-auto"
       >
         Ver disponibilidade
         <Icone
@@ -37,14 +34,12 @@ const maiorOff = Math.max(...ofertas.map((o) => desconto(o) ?? 0));
       </a>
     </div>
 
-    <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+    <div class="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
       {ofertas.map((p, i) => <CardProduto produto={p} atraso={(i % 4) * 60} />)}
     </div>
 
-    <p
-      class="reveal mt-8 flex items-start gap-2.5 text-xs leading-relaxed text-white/40 sm:items-center"
-    >
-      <Icone nome="check" class="mt-0.5 size-4 shrink-0 text-moto-500 sm:mt-0" />
+    <p class="reveal mt-8 flex items-start gap-2.5 text-xs leading-relaxed text-white/40 sm:items-center">
+      <Icone nome="check" class="mt-0.5 size-4 shrink-0 text-rubi-500 sm:mt-0" />
       Preços à vista. Trabalhamos com pagamento facilitado — pergunte as condições no atendimento.
     </p>
   </div>

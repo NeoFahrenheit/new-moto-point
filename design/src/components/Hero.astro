@@ -3,86 +3,60 @@ import { Image } from 'astro:assets';
 import Icone from './Icone.astro';
 import { fotos } from '../data/servicos';
 import { site, contato, marcas, zap } from '../data/site';
-
-const numeros = [
-  { valor: `${new Date().getFullYear() - site.desde}+`, rotulo: 'anos na Farrapos' },
-  { valor: '3 em 1', rotulo: 'peça, acessório e oficina' },
-  { valor: '5', rotulo: 'marcas atendidas' },
-];
 ---
 
-<section class="relative isolate overflow-hidden bg-graphite-950">
-  <!-- Foto de fundo: bancada da própria oficina -->
-  <div class="absolute inset-0 -z-20">
-    <Image
-      src={fotos.manutencao}
-      alt=""
-      widths={[640, 1024, 1600]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="size-full scale-105 object-cover object-center opacity-45"
-    />
+<section class="relative isolate overflow-hidden bg-carbon-950 pb-14 lg:pb-24">
+  <!-- Brilho vermelho atrás da foto -->
+  <div
+    class="absolute -top-24 right-[-18rem] -z-10 size-[46rem] rounded-full bg-rubi-600/25 blur-[150px]"
+  >
   </div>
+  <div class="textura-pontos absolute inset-0 -z-10 opacity-60"></div>
 
-  <!-- Camadas de escurecimento e cor de marca -->
   <div
-    class="absolute inset-0 -z-10 bg-linear-to-r from-graphite-950 via-graphite-950/92 to-graphite-950/45"
+    class="mx-auto grid max-w-7xl items-center gap-10 px-4 pt-12 sm:px-6 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:pt-16"
   >
-  </div>
-  <div
-    class="absolute inset-0 -z-10 bg-linear-to-t from-graphite-900 via-transparent to-graphite-950/70"
-  >
-  </div>
-  <div
-    class="absolute -top-32 -right-24 -z-10 hidden size-[36rem] rounded-full bg-moto-600/22 blur-[130px] lg:block"
-  >
-  </div>
-  <div class="grid-texture absolute inset-0 -z-10 opacity-40"></div>
-
-  <div class="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:pt-24 lg:pb-24">
-    <div class="max-w-3xl">
-      <p
-        class="reveal inline-flex items-center gap-2.5 rounded-full border border-moto-500/30 bg-moto-500/10 py-1.5 pr-4 pl-2 text-[11px] font-bold tracking-[0.16em] text-moto-300 uppercase"
-      >
-        <span class="rounded-full bg-moto-500 px-2 py-0.5 text-white">Desde {site.desde}</span>
-        Porto Alegre · <span class="hidden sm:inline">Bairro </span>Floresta
+    <!-- Texto -->
+    <div>
+      <p class="reveal flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span
+          class="grad-rubi rotulo rounded-sm px-3 py-1.5 text-[10px] text-white shadow-lg shadow-rubi-900/40"
+        >
+          Desde {site.desde}
+        </span>
+        <span class="rotulo text-[10px] text-white/45">
+          Av. Farrapos · Floresta · Porto Alegre
+        </span>
       </p>
 
       <h1 class="reveal display mt-6 text-white" style="--reveal-delay:80ms">
-        <span class="block text-[11.5vw] leading-[0.86] sm:text-6xl lg:text-8xl">
-          Não fique rodando
-        </span>
-        <span class="block text-[11.5vw] leading-[0.86] sm:text-6xl lg:text-8xl">
-          por aí. Vai direto
-        </span>
-        <span
-          class="mt-1.5 block text-[11.5vw] leading-[0.86] text-moto-500 italic sm:text-6xl lg:text-8xl"
-        >
-          em quem entende.
+        <span class="block text-[10.5vw] sm:text-5xl lg:text-6xl xl:text-7xl">Moto parada</span>
+        <span class="block text-[10.5vw] sm:text-5xl lg:text-6xl xl:text-7xl">é dinheiro</span>
+        <span class="block text-[10.5vw] text-rubi-500 sm:text-5xl lg:text-6xl xl:text-7xl">
+          parado.
         </span>
       </h1>
 
       <p
-        class="reveal mt-7 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
-        style="--reveal-delay:160ms"
+        class="reveal mt-7 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg"
+        style="--reveal-delay:150ms"
       >
-        Peça, acessório, roupa de moto e oficina no mesmo endereço. Mão de obra certificada <strong
+        Peça, acessório e oficina no mesmo balcão, com mão de obra certificada <strong
           class="font-semibold text-white">SENAC RS</strong
-        >, orçamento na hora pelo WhatsApp e <strong class="font-semibold text-white"
+        >. Orçamento na hora pelo WhatsApp e <strong class="font-semibold text-white"
           >tele entrega</strong
-        > na região.
+        > na região — para você voltar a rodar no mesmo dia.
       </p>
 
-      <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row" style="--reveal-delay:220ms">
+      <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row" style="--reveal-delay:210ms">
         <a
           href={zap('Olá! Quero um orçamento na New Moto Point. Minha moto é uma ')}
           target="_blank"
           rel="noopener"
-          class="group flex items-center justify-center gap-2.5 rounded-xl bg-zap-500 px-7 py-4 font-bold text-graphite-950 shadow-xl shadow-zap-500/20 transition-all hover:bg-zap-400 hover:shadow-zap-500/35"
+          class="group flex items-center justify-center gap-2.5 rounded-sm bg-zap-500 px-7 py-4 font-extrabold tracking-wide text-carbon-950 uppercase shadow-xl shadow-zap-500/20 transition-all hover:bg-zap-400"
         >
           <Icone nome="whatsapp" class="size-5.5" />
-          Pedir orçamento agora
+          Pedir orçamento
           <Icone
             nome="seta"
             class="size-5 transition-transform duration-300 group-hover:translate-x-1"
@@ -90,56 +64,69 @@ const numeros = [
         </a>
         <a
           href="#oficina"
-          class="flex items-center justify-center gap-2.5 rounded-xl border border-white/18 px-7 py-4 font-bold text-white backdrop-blur-sm transition-all hover:border-moto-500 hover:bg-moto-500/12"
+          class="flex items-center justify-center gap-2.5 rounded-sm border border-white/20 px-7 py-4 font-extrabold tracking-wide text-white uppercase transition-all hover:border-rubi-500 hover:bg-rubi-500"
         >
           <Icone nome="ferramentas" class="size-5" />
-          Serviços da oficina
+          Ver a oficina
         </a>
       </div>
 
-      <p class="reveal mt-6 text-sm text-white/45" style="--reveal-delay:280ms">
+      <p class="reveal mt-6 text-sm text-white/45" style="--reveal-delay:260ms">
         Ou ligue para <a
           href={contato.telefoneFixoHref}
-          class="font-semibold text-white underline decoration-moto-500 decoration-2 underline-offset-4 transition-colors hover:text-moto-400"
+          class="font-semibold text-white underline decoration-rubi-500 decoration-2 underline-offset-4 transition-colors hover:text-rubi-400"
           >{contato.telefoneFixo}</a
         > — atendemos de segunda a sábado.
       </p>
     </div>
 
-    <!-- Números e marcas -->
-    <div
-      class="reveal mt-14 grid gap-8 border-t border-white/10 pt-9 sm:grid-cols-2 lg:mt-20 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-14"
-      style="--reveal-delay:340ms"
-    >
-      <dl class="flex gap-8 sm:gap-10">
+    <!-- Foto da oficina, cortada na diagonal -->
+    <div class="reveal relative" style="--reveal-delay:120ms">
+      <div
+        class="relative aspect-4/3 overflow-hidden lg:aspect-5/6"
+        style="clip-path:polygon(0 0,100% 0,100% 88%,86% 100%,0 100%)"
+      >
+        <Image
+          src={fotos.manutencao}
+          alt="Mecânico da New Moto Point fazendo manutenção em uma moto na oficina da Av. Farrapos"
+          widths={[500, 800, 1200]}
+          sizes="(min-width: 1024px) 46vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="size-full object-cover"
+        />
+        <div
+          class="absolute inset-0 bg-linear-to-tr from-carbon-950 via-carbon-950/25 to-rubi-600/25"
+        >
+        </div>
+      </div>
+
+      <!-- Selo de anos, sobreposto -->
+      <div
+        class="grad-rubi absolute -bottom-5 left-4 flex items-center gap-4 px-6 py-4 shadow-2xl shadow-black/60 sm:left-8"
+      >
+        <span class="display text-5xl leading-none text-white">
+          {new Date().getFullYear() - site.desde}
+        </span>
+        <span class="rotulo text-[10px] leading-relaxed text-white/85">
+          anos na<br />Av. Farrapos
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marcas atendidas -->
+  <div class="reveal mx-auto mt-16 max-w-7xl px-4 sm:px-6" style="--reveal-delay:300ms">
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8">
+      <p class="rotulo text-[10px] text-white/35">Trabalhamos com</p>
+      <div class="flex flex-wrap items-center gap-x-7 gap-y-3">
         {
-          numeros.map((n) => (
-            <div>
-              <dt class="sr-only">{n.rotulo}</dt>
-              <dd>
-                <span class="display block text-4xl text-white lg:text-5xl">{n.valor}</span>
-                <span class="mt-1 block text-[11px] font-bold tracking-[0.16em] text-white/40 uppercase">
-                  {n.rotulo}
-                </span>
-              </dd>
-            </div>
+          marcas.map((m) => (
+            <span class="display text-xl text-white/45 transition-colors hover:text-white/80 sm:text-2xl">
+              {m}
+            </span>
           ))
         }
-      </dl>
-
-      <div class="lg:border-l lg:border-white/10 lg:pl-14">
-        <p class="text-[11px] font-bold tracking-[0.22em] text-white/35 uppercase">
-          Trabalhamos com
-        </p>
-        <div class="mt-3 flex flex-wrap gap-2">
-          {
-            marcas.map((m) => (
-              <span class="display rounded-lg border border-white/12 bg-white/4 px-3.5 py-1.5 text-lg tracking-wider text-white/75">
-                {m}
-              </span>
-            ))
-          }
-        </div>
       </div>
     </div>
   </div>

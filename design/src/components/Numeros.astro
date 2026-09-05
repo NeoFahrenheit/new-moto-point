@@ -1,0 +1,37 @@
+---
+import Icone from './Icone.astro';
+import Corte from './Corte.astro';
+import { diferenciais } from '../data/servicos';
+---
+
+<!-- Faixa vermelha com os quatro diferenciais numerados.
+     O corte no topo é o que costura a foto do topo com esta faixa. -->
+<section class="grad-rubi relative overflow-hidden pt-16 pb-14 lg:pt-24 lg:pb-20" aria-label="Nossos diferenciais">
+  <Corte cor="bg-carbon-950" lado="dir" />
+  <Corte cor="bg-carbon-950" posicao="base" lado="esq" />
+  <div class="hachura absolute inset-0 opacity-40"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+    <ol class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        diferenciais.map((d, i) => (
+          <li class="reveal group relative" style={`--reveal-delay:${i * 80}ms`}>
+            <div class="flex items-center gap-4">
+              <span class="display numero-vazado text-5xl leading-none lg:text-6xl">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-sm bg-white/15 text-white transition-colors duration-300 group-hover:bg-white group-hover:text-rubi-600">
+                <Icone nome={d.icone} class="size-5.5" />
+              </span>
+            </div>
+
+            <h3 class="display mt-5 text-xl text-white lg:text-2xl">{d.titulo}</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-white/75">{d.texto}</p>
+
+            <span class="mt-5 block h-0.5 w-10 bg-white/40 transition-all duration-500 group-hover:w-20 group-hover:bg-white" />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

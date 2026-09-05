@@ -2,147 +2,103 @@
 import { Image } from 'astro:assets';
 import Icone from './Icone.astro';
 import TituloSecao from './TituloSecao.astro';
-import { fotos, depoimentos } from '../data/servicos';
+import { depoimentos } from '../data/servicos';
 import faixa from '../assets/img/brand/faixa-pecas-acessorios-oficina.jpg';
 import { site, redes } from '../data/site';
 
 const anos = new Date().getFullYear() - site.desde;
 ---
 
-<section id="loja" class="relative overflow-hidden bg-graphite-950 py-20 lg:py-28">
+<section id="loja" class="relative overflow-hidden bg-carbon-900 py-20 lg:py-28">
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-      <!-- Mosaico de fotos reais da loja -->
-      <div class="reveal relative">
-        <div class="grid grid-cols-2 gap-4">
-          <Image
-            src={fotos.trocaOleo}
-            alt="Troca de óleo sendo feita na oficina da New Moto Point"
-            widths={[300, 500, 700]}
-            sizes="(min-width: 1024px) 24vw, 45vw"
-            loading="lazy"
-            decoding="async"
-            class="aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover"
-          />
-          <Image
-            src={fotos.centragem}
-            alt="Centragem de roda na bancada da New Moto Point"
-            widths={[300, 500, 700]}
-            sizes="(min-width: 1024px) 24vw, 45vw"
-            loading="lazy"
-            decoding="async"
-            class="mt-8 aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover"
-          />
-          <Image
-            src={fotos.pneu}
-            alt="Manutenção de roda e pneu na New Moto Point"
-            widths={[300, 500, 700]}
-            sizes="(min-width: 1024px) 24vw, 45vw"
-            loading="lazy"
-            decoding="async"
-            class="-mt-4 aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover"
-          />
-          <Image
-            src={fotos.capaBanco}
-            alt="Capa de banco instalada na oficina da New Moto Point"
-            widths={[300, 500, 700]}
-            sizes="(min-width: 1024px) 24vw, 45vw"
-            loading="lazy"
-            decoding="async"
-            class="mt-4 aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover"
-          />
-        </div>
-
-        <!-- Selo de anos -->
-        <div
-          class="absolute -right-2 bottom-4 rounded-2xl bg-moto-500 px-6 py-5 text-center shadow-2xl shadow-black/50 sm:right-4"
-        >
-          <span class="display block text-5xl leading-none text-white">{anos}</span>
-          <span
-            class="mt-1 block text-[10px] font-bold tracking-[0.18em] text-white/85 uppercase"
-          >
-            anos de<br />Farrapos
-          </span>
-        </div>
-      </div>
-
-      <!-- Texto -->
+    <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <!-- História da loja -->
       <div>
         <TituloSecao
           sobretitulo="A loja"
           titulo="Três negócios no mesmo balcão"
-          destaque="desde 2012."
+          destaque={`desde ${site.desde}.`}
         />
 
         <div class="reveal mt-6 space-y-4 text-[15px] leading-relaxed text-white/60">
           <p>
-            A New Moto Point nasceu em {site.desde} na Av. Farrapos, esquina com a Rua Hoffmann,
-            no bairro Floresta. A ideia sempre foi simples: reunir <strong
+            A New Moto Point nasceu em {site.desde} na Av. Farrapos, esquina com a Rua Hoffmann, no
+            bairro Floresta. A ideia sempre foi simples: reunir <strong
               class="font-semibold text-white">peça, acessório e oficina</strong
             > num só lugar, para o motociclista não perder o dia inteiro rodando de loja em loja.
           </p>
           <p>
             Atendemos muito entregador e quem usa a moto para trabalhar — gente que não pode ficar
             parada. Por isso o orçamento sai rápido pelo WhatsApp, a oficina tem mão de obra
-            certificada <strong class="font-semibold text-white">SENAC RS</strong> e a gente
-            mantém tele entrega e busca na região.
+            certificada <strong class="font-semibold text-white">SENAC RS</strong> e a gente mantém
+            tele entrega e busca na região.
           </p>
         </div>
 
-        <Image
-          src={faixa}
-          alt="Peças, acessórios e oficina — New Moto Point"
-          widths={[500, 900]}
-          sizes="(min-width: 1024px) 46vw, 92vw"
-          loading="lazy"
-          decoding="async"
-          class="reveal mt-8 w-full rounded-xl border border-white/10"
-        />
+        <dl class="reveal mt-9 grid grid-cols-3 gap-px border border-white/10 bg-white/10">
+          {
+            [
+              { valor: `${anos}`, rotulo: 'anos na Farrapos' },
+              { valor: '3 em 1', rotulo: 'loja, peça e oficina' },
+              { valor: '5', rotulo: 'marcas atendidas' },
+            ].map((n) => (
+              <div class="bg-carbon-900 px-4 py-6 text-center">
+                <dt class="sr-only">{n.rotulo}</dt>
+                <dd>
+                  <span class="display block text-3xl text-rubi-500 lg:text-4xl">{n.valor}</span>
+                  <span class="rotulo mt-2 block text-[9px] text-white/40">{n.rotulo}</span>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
 
         <a
           href={redes.instagram}
           target="_blank"
           rel="noopener"
-          class="reveal group mt-7 inline-flex items-center gap-2.5 text-sm font-bold text-white transition-colors hover:text-moto-400"
+          class="reveal group mt-8 inline-flex items-center gap-2.5 text-[13px] font-extrabold tracking-wider text-white uppercase transition-colors hover:text-rubi-400"
         >
-          <Icone nome="instagram" class="size-5 text-moto-500" />
-          Ver o dia a dia da loja no {redes.instagramHandle}
+          <Icone nome="instagram" class="size-5 text-rubi-500" />
+          Ver o dia a dia no {redes.instagramHandle}
           <Icone
             nome="setaCurta"
             class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           />
         </a>
       </div>
-    </div>
 
-    <!-- Depoimentos reais do Google -->
-    <div class="mt-20 lg:mt-28">
-      <div class="reveal flex flex-wrap items-baseline gap-x-4 gap-y-2">
-        <p class="display text-2xl tracking-wide text-white sm:text-3xl">O que dizem no Google</p>
-        <p class="text-sm text-white/40">Avaliações publicadas no perfil da loja</p>
-      </div>
+      <!-- Faixa da loja + depoimentos -->
+      <div class="flex flex-col gap-6">
+        <Image
+          src={faixa}
+          alt="Peças, acessórios e oficina — New Moto Point"
+          widths={[500, 900, 1200]}
+          sizes="(min-width: 1024px) 46vw, 92vw"
+          loading="lazy"
+          decoding="async"
+          class="reveal w-full border border-white/10"
+        />
 
-      <div class="mt-8 grid gap-5 lg:grid-cols-2">
+        <div class="reveal flex items-baseline gap-3">
+          <p class="display text-xl text-white sm:text-2xl">O que dizem no Google</p>
+          <p class="text-xs text-white/40">Avaliações do perfil da loja</p>
+        </div>
+
         {
           depoimentos.map((d, i) => (
             <figure
-              class="reveal relative flex flex-col rounded-2xl border border-white/8 bg-graphite-900 p-7"
-              style={`--reveal-delay:${i * 100}ms`}
+              class="reveal relative border-l-2 border-rubi-500 bg-carbon-850 p-6"
+              style={`--reveal-delay:${i * 90}ms`}
             >
-              <span
-                class="display absolute top-4 right-6 text-7xl leading-none text-moto-500/15"
-                aria-hidden="true"
-              >
-                &rdquo;
-              </span>
-              <div class="flex gap-0.5 text-moto-500">
-                {Array.from({ length: 5 }).map(() => <Icone nome="estrela" class="size-4" />)}
+              <div class="flex gap-0.5 text-rubi-500">
+                {Array.from({ length: 5 }).map(() => (
+                  <Icone nome="estrela" class="size-4" />
+                ))}
               </div>
-              <blockquote class="relative mt-4 flex-1 text-[15px] leading-relaxed text-white/70">
-                {d.texto}
-              </blockquote>
-              <figcaption class="mt-6 flex items-center gap-3 border-t border-white/8 pt-5">
-                <span class="display flex size-11 items-center justify-center rounded-full bg-moto-500/15 text-xl text-moto-400">
+              <blockquote class="mt-4 text-sm leading-relaxed text-white/70">{d.texto}</blockquote>
+              <figcaption class="mt-5 flex items-center gap-3 border-t border-white/8 pt-4">
+                <span class="display flex size-10 items-center justify-center rounded-full bg-rubi-500/15 text-lg text-rubi-400">
                   {d.autor.charAt(0)}
                 </span>
                 <span>

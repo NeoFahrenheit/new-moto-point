@@ -21,18 +21,16 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
 
 <article
   class:list={[
-    'reveal group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300',
+    'reveal group relative flex flex-col border transition-all duration-300',
     claro
-      ? 'border-graphite-900/10 bg-white hover:border-moto-500/40 hover:shadow-2xl hover:shadow-graphite-900/10'
-      : 'border-white/8 bg-graphite-850 hover:border-moto-500/50 hover:bg-graphite-800',
+      ? 'border-carbon-950/12 bg-white hover:border-rubi-500'
+      : 'border-white/10 bg-carbon-850 hover:border-rubi-500',
   ]}
   style={atraso ? `--reveal-delay:${atraso}ms` : undefined}
 >
   {
     off !== null && (
-      <span
-        class="absolute top-3 left-3 z-10 rounded-full bg-moto-500 px-2.5 py-1 text-[11px] font-extrabold tracking-wide text-white shadow-lg shadow-moto-700/30"
-      >
+      <span class="grad-rubi absolute top-0 left-0 z-10 px-3 py-1.5 text-[11px] font-extrabold tracking-wider text-white">
         −{off}%
       </span>
     )
@@ -57,8 +55,8 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
         p.marca && (
           <p
             class:list={[
-              'text-[10.5px] font-bold tracking-[0.2em] uppercase',
-              claro ? 'text-graphite-500' : 'text-white/40',
+              'rotulo text-[9.5px]',
+              claro ? 'text-carbon-500' : 'text-white/40',
             ]}
           >
             {p.marca}
@@ -67,15 +65,15 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
       }
       <h3
         class:list={[
-          'mt-1 text-[15px] leading-snug font-semibold',
-          claro ? 'text-graphite-900' : 'text-white',
+          'mt-1.5 text-[15px] leading-snug font-semibold',
+          claro ? 'text-carbon-950' : 'text-white',
         ]}
       >
         {p.nome}
       </h3>
       {
         p.tamanhos && (
-          <p class:list={['mt-1.5 text-xs', claro ? 'text-graphite-500' : 'text-white/45']}>
+          <p class:list={['mt-1.5 text-xs', claro ? 'text-carbon-500' : 'text-white/45']}>
             Tam. {p.tamanhos}
           </p>
         )
@@ -90,7 +88,7 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
               <span
                 class:list={[
                   'text-sm line-through',
-                  claro ? 'text-graphite-500' : 'text-white/35',
+                  claro ? 'text-carbon-500' : 'text-white/35',
                 ]}
               >
                 {moeda.format(p.precoAntigo)}
@@ -98,8 +96,8 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
             )}
             <span
               class:list={[
-                'display text-3xl',
-                p.precoAntigo ? 'text-moto-500' : claro ? 'text-graphite-900' : 'text-white',
+                'display text-2xl',
+                p.precoAntigo ? 'text-rubi-500' : claro ? 'text-carbon-950' : 'text-white',
               ]}
             >
               {precoFmt}
@@ -108,8 +106,8 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
         ) : (
           <p
             class:list={[
-              'display text-xl',
-              claro ? 'text-graphite-700' : 'text-white/70',
+              'py-1 text-[12.5px] font-bold tracking-[0.14em] uppercase',
+              claro ? 'text-carbon-500' : 'text-white/45',
             ]}
           >
             Consulte o valor
@@ -122,14 +120,14 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
         target="_blank"
         rel="noopener"
         class:list={[
-          'mt-3 flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-colors',
+          'mt-3 flex items-center justify-center gap-2 rounded-sm px-4 py-2.5 text-[12px] font-extrabold tracking-wider uppercase transition-colors',
           claro
-            ? 'bg-graphite-900 text-white hover:bg-zap-500 hover:text-graphite-950'
-            : 'bg-white/8 text-white hover:bg-zap-500 hover:text-graphite-950',
+            ? 'bg-carbon-950 text-white hover:bg-zap-500 hover:text-carbon-950'
+            : 'bg-white/8 text-white hover:bg-zap-500 hover:text-carbon-950',
         ]}
       >
         <Icone nome="whatsapp" class="size-4.5" />
-        {precoFmt ? 'Quero este' : 'Pedir orçamento'}
+        {precoFmt ? 'Quero este' : 'Orçamento'}
       </a>
     </div>
   </div>

@@ -15,12 +15,7 @@ const iconePorGrupo: Record<string, string> = {
 };
 ---
 
-<section id="acessorios" class="relative overflow-hidden bg-graphite-900 py-20 lg:py-28">
-  <div
-    class="absolute top-1/3 -right-40 size-[32rem] rounded-full bg-moto-700/12 blur-[130px]"
-  >
-  </div>
-
+<section id="acessorios" class="relative overflow-hidden bg-carbon-900 py-20 lg:py-28">
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
     <TituloSecao
       sobretitulo="Acessórios"
@@ -31,24 +26,33 @@ const iconePorGrupo: Record<string, string> = {
 
     <div class="mt-14 space-y-16 lg:space-y-20">
       {
-        grupos.map((g) => (
+        grupos.map((g, gi) => (
           <div id={g.id} class="scroll-mt-28">
-            <div class="reveal flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
-              <div class="flex items-start gap-4">
-                <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-moto-500/12 text-moto-500">
-                  <Icone nome={iconePorGrupo[g.id] ?? 'check'} class="size-6" />
+            <div class="reveal flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              <div class="flex items-start gap-5">
+                <span class="display numero-vazado shrink-0 text-5xl leading-none lg:text-6xl">
+                  {String(gi + 1).padStart(2, '0')}
                 </span>
                 <div>
-                  <h3 class="display text-3xl tracking-wide text-white sm:text-4xl">{g.titulo}</h3>
-                  <p class="mt-2 max-w-xl text-sm leading-relaxed text-white/55">{g.descricao}</p>
+                  <h3 class="display flex items-center gap-3 text-2xl text-white sm:text-3xl">
+                    <Icone nome={iconePorGrupo[g.id] ?? 'check'} class="size-6 text-rubi-500" />
+                    {g.titulo}
+                  </h3>
+                  <p class="mt-2.5 max-w-xl text-sm leading-relaxed text-white/55">
+                    {g.descricao}
+                  </p>
                 </div>
               </div>
-              <span class="shrink-0 text-xs font-bold tracking-[0.16em] text-white/35 uppercase">
+              <span class="rotulo shrink-0 text-[10px] text-white/35">
                 {g.itens.length} {g.itens.length === 1 ? 'item' : 'itens'}
               </span>
             </div>
 
-            <div class="mt-7 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+            <div class="mt-6 h-0.5 w-full bg-white/10">
+              <span class="block h-0.5 w-24 bg-rubi-500" />
+            </div>
+
+            <div class="mt-7 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {g.itens.map((p, i) => (
                 <CardProduto produto={p} atraso={(i % 4) * 60} />
               ))}
@@ -56,7 +60,7 @@ const iconePorGrupo: Record<string, string> = {
 
             {g.id === 'baus' && (
               <p class="reveal mt-6 flex items-center gap-2.5 text-sm text-white/45">
-                <Icone nome="check" class="size-4 shrink-0 text-moto-500" />
+                <Icone nome="check" class="size-4 shrink-0 text-rubi-500" />
                 Também disponível na loja: {semFoto.join(', ')}.
               </p>
             )}
@@ -66,11 +70,11 @@ const iconePorGrupo: Record<string, string> = {
     </div>
 
     <div
-      class="reveal mt-16 flex flex-col items-start gap-5 rounded-2xl border border-white/8 bg-graphite-850 p-7 sm:flex-row sm:items-center sm:justify-between lg:p-9"
+      class="reveal mt-16 flex flex-col items-start gap-5 border border-white/10 bg-carbon-850 p-7 sm:flex-row sm:items-center sm:justify-between lg:p-9"
     >
       <div>
         <h3 class="display text-2xl text-white sm:text-3xl">
-          Não achou o modelo ou o tamanho que precisa?
+          Não achou o modelo ou o tamanho?
         </h3>
         <p class="mt-2 max-w-xl text-sm leading-relaxed text-white/55">
           O catálogo do site é uma amostra. Manda uma foto ou o nome do item no WhatsApp que a
@@ -81,10 +85,10 @@ const iconePorGrupo: Record<string, string> = {
         href={zap('Olá! Estou procurando um acessório: ')}
         target="_blank"
         rel="noopener"
-        class="group inline-flex shrink-0 items-center gap-2.5 rounded-xl bg-zap-500 px-6 py-4 font-bold text-graphite-950 shadow-lg shadow-zap-500/20 transition-all hover:bg-zap-400"
+        class="group inline-flex shrink-0 items-center gap-2.5 rounded-sm bg-zap-500 px-6 py-4 font-extrabold tracking-wide text-carbon-950 uppercase transition-all hover:bg-zap-400"
       >
         <Icone nome="whatsapp" class="size-5" />
-        Perguntar no WhatsApp
+        Perguntar no zap
         <Icone
           nome="seta"
           class="size-5 transition-transform duration-300 group-hover:translate-x-1"

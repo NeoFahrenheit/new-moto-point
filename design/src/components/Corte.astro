@@ -1,0 +1,52 @@
+---
+/**
+ * Corte diagonal entre duas seções — o detalhe que dá o ritmo desta versão.
+ *
+ * Desenha um triângulo com a cor da seção vizinha na borda da seção atual.
+ * O conteúdo nunca é recortado: é só uma camada decorativa (`aria-hidden`).
+ *
+ * Use sempre uma cor CHAPADA da seção vizinha. Em seções com gradiente,
+ * prefira colocar o corte na base da própria seção do gradiente, apontando
+ * para a cor lisa de baixo — assim não aparece emenda de tonalidade.
+ */
+interface Props {
+  /** Classe de fundo da seção vizinha. Ex.: 'bg-carbon-950' */
+  cor: string;
+  /** Em qual borda da seção o corte fica. */
+  posicao?: 'topo' | 'base';
+  /** Lado grosso do triângulo. */
+  lado?: 'esq' | 'dir';
+  /** Altura do corte. Quanto maior, mais inclinada fica a diagonal. */
+  altura?: string;
+  class?: string;
+}
+
+const {
+  cor,
+  posicao = 'topo',
+  lado = 'esq',
+  altura = 'h-10 sm:h-16 lg:h-24',
+  class: klass,
+} = Astro.props;
+
+const recortes = {
+  'topo-esq': 'polygon(0 0, 100% 0, 0 100%)',
+  'topo-dir': 'polygon(0 0, 100% 0, 100% 100%)',
+  'base-esq': 'polygon(0 0, 0 100%, 100% 100%)',
+  'base-dir': 'polygon(100% 0, 100% 100%, 0 100%)',
+} as const;
+
+const recorte = recortes[`${posicao}-${lado}` as keyof typeof recortes];
+---
+
+<div
+  class:list={[
+    'pointer-events-none absolute inset-x-0 z-10',
+    posicao === 'topo' ? 'top-0' : 'bottom-0',
+    altura,
+    klass,
+  ]}
+  aria-hidden="true"
+>
+  <div class:list={['size-full', cor]} style={`clip-path:${recorte}`}></div>
+</div>
