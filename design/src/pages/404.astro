@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Icone from '../components/Icone.astro';
 import { site, contato, zap } from '../data/site';
+import { url } from '../data/navegacao';
 
 const atalhos = [
   { href: '/loja/', rotulo: 'Catálogo da loja', icone: 'loja' },
@@ -33,7 +34,7 @@ const atalhos = [
 
       <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
         <a
-          href="/"
+          href={url('/')}
           class="group flex items-center justify-center gap-2.5 rounded-full bg-tinta-950 px-7 py-4 font-semibold text-white transition-all hover:bg-ambar-400 hover:text-tinta-950"
         >
           <Icone nome="moto" class="size-5.5" />
@@ -54,7 +55,7 @@ const atalhos = [
         {
           atalhos.map((a) => (
             <li class="fio group">
-              <a href={a.href} class="flex items-center gap-4 py-4">
+              <a href={url(a.href)} class="flex items-center gap-4 py-4">
                 <Icone nome={a.icone} class="size-5 shrink-0 text-ambar-500" />
                 <span class="display flex-1 text-xl text-tinta-950 transition-colors group-hover:text-ambar-600">
                   {a.rotulo}

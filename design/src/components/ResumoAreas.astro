@@ -3,6 +3,7 @@ import Icone from './Icone.astro';
 import { ofertas, vitrines } from '../data/catalogo';
 import { servicos, especialidades } from '../data/servicos';
 import { endereco } from '../data/site';
+import { url } from '../data/navegacao';
 
 // Números tirados do próprio catálogo — não há contagem escrita à mão que
 // possa ficar desatualizada quando um produto entrar ou sair.
@@ -52,7 +53,7 @@ const areas = [
       {
         areas.map((a, i) => (
           <li class="fio reveal group" style={`--reveal-delay:${i * 80}ms`}>
-            <a href={a.href} class="flex items-center gap-5 py-8 lg:gap-10">
+            <a href={url(a.href)} class="flex items-center gap-5 py-8 lg:gap-10">
               <Icone
                 nome={a.icone}
                 class="hidden size-7 shrink-0 text-ambar-500 transition-colors group-hover:text-ambar-600 sm:block"

@@ -1,5 +1,6 @@
 ---
 import Icone from './Icone.astro';
+import { url } from '../data/navegacao';
 import TituloSecao from './TituloSecao.astro';
 import CardProduto from './CardProduto.astro';
 import { ofertas, desconto } from '../data/catalogo';
@@ -31,7 +32,7 @@ const maiorOff = Math.max(...ofertas.map((o) => desconto(o) ?? 0));
       />
 
       <a
-        href={resumido ? '/loja/#ofertas' : zap('Olá! Quero saber quais ofertas ainda estão disponíveis na New Moto Point.')}
+        href={resumido ? url('/loja/#ofertas') : zap('Olá! Quero saber quais ofertas ainda estão disponíveis na New Moto Point.')}
         target={resumido ? undefined : '_blank'}
         rel={resumido ? undefined : 'noopener'}
         class="reveal group inline-flex shrink-0 items-center gap-2.5 self-start rounded-full border border-tinta-950/20 px-6 py-3 text-sm font-semibold text-tinta-950 transition-all hover:border-ambar-500 hover:bg-ambar-400 lg:self-auto"

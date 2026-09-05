@@ -1,6 +1,7 @@
 ---
 import Icone from './Icone.astro';
 import { contato, endereco, zap } from '../data/site';
+import { url } from '../data/navegacao';
 ---
 
 <!-- Fecho da página: o último empurrão antes do rodapé. -->
@@ -53,7 +54,7 @@ import { contato, endereco, zap } from '../data/site';
         {endereco.rua}, {endereco.complemento} — {endereco.bairro}, {endereco.cidade}/{endereco.estado}
       </p>
       <a
-        href="/contato/"
+        href={url('/contato/')}
         class="group inline-flex shrink-0 items-center gap-2.5 font-semibold text-tinta-950 transition-colors hover:text-ambar-600"
       >
         Mapa, horários e canais
