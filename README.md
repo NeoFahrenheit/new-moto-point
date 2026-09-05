@@ -22,9 +22,18 @@ vive na sua branch:
 | `versao-2-asfalto` | Versão 2 | Preto puro, vermelho em gradiente, cortes na diagonal, Montserrat 900. |
 | `versao-3-editorial` | Versão 3 | Papel creme, âmbar, serifa Playfair, listas em fio de régua. |
 
-> As versões usam fontes diferentes, então o `package.json` muda entre elas.
-> **Depois de trocar de branch, rode `npm install` em `design/`** — senão o
-> build falha dizendo que não acha o `.css` da fonte.
+### Trocando de versão
+
+Cada versão usa uma fonte diferente, então o `package.json` muda entre as
+branches. E ele fica em **`design/`**, não na raiz do repositório — rodar
+`npm install` na raiz dá `ENOENT: package.json`:
+
+```bash
+git checkout versao-2-asfalto
+cd design
+npm install     # sem isso o build para em "@fontsource/... não encontrado"
+npm run dev     # http://localhost:4321
+```
 
 ## Rodando
 
