@@ -50,6 +50,10 @@ npx astro check        # tipos e diagnósticos
 `SITE_URL` define a URL canônica, o `sitemap.xml`, o `robots.txt` e as tags de
 compartilhamento. Sem ela o build avisa e usa um endereço de exemplo.
 
+> Cada versão usa uma fonte diferente, então o `package.json` muda entre as
+> branches. **Ao trocar de versão, rode `npm install` de novo** — senão o build
+> para dizendo que não acha o `.css` da fonte.
+
 ## Onde mexer no conteúdo
 
 Os dados são exatamente os mesmos das outras versões — trocar de branch não
