@@ -67,9 +67,12 @@ menu aponta para a raiz do domínio e o visitante cai na outra versão do site.
 > um valor começando com `/` é convertido em caminho de disco antes de chegar
 > ao Node e o build quebra.
 
-> Cada versão usa uma fonte diferente, então o `package.json` muda entre as
-> branches. **Ao trocar de versão, rode `npm install` de novo** — senão o build
-> para dizendo que não acha o `.css` da fonte.
+> Cada versão usa uma fonte de título diferente, mas as três declaram as três
+> fontes no `package.json`. É de propósito: assim as dependências são iguais
+> nas três branches e trocar de versão **não exige `npm install` de novo** —
+> antes disso, quem trocava sem reinstalar batia num erro de `.css` de fonte
+> que não explicava nada. A fonte que não é importada no `global.css` não entra
+> no build: o `dist/` sai do mesmo tamanho.
 
 ## Onde mexer no conteúdo
 
