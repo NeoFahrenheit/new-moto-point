@@ -95,13 +95,36 @@ src/
     Servicos.astro        lista de serviços em fio de régua
     Numeros.astro         números da loja + diferenciais
   data/              conteúdo e catálogo
+    navegacao.ts     menu, submenus e item ativo — fonte única
   layouts/Base.astro <head>, JSON-LD, header/footer, script de revelação
   pages/
-    index.astro      monta as seções na ordem
+    index.astro      home: topo, números, resumo, 4 ofertas, a loja
+    loja.astro       catálogo inteiro (ofertas, acessórios, peças, óleos)
+    oficina.astro    serviços, especialidades e como funciona
+    contato.astro    canais, horários, endereço e mapa
     404.astro        página de erro, com atalhos e WhatsApp
     robots.txt.ts    gerado no build a partir do SITE_URL
   styles/global.css  tokens de cor, tipografia e utilitários
 ```
+
+## As quatro páginas
+
+| URL | O que tem |
+| --- | --- |
+| `/` | Topo, números da loja, diferenciais, resumo das três áreas, 4 ofertas em destaque, a loja e os depoimentos. |
+| `/loja/` | Catálogo completo, com âncora por categoria: `#ofertas`, `#chuva`, `#baus`, `#viseiras`, `#pecas`, `#oleos`. |
+| `/oficina/` | Os 6 serviços em fio de régua, as especialidades e os 4 passos do atendimento. |
+| `/contato/` | Canais, horários, endereço e mapa. |
+
+O menu sai de `src/data/navegacao.ts` — mexer ali muda o topo, o menu do
+celular, o rodapé e os atalhos da 404 de uma vez.
+
+O submenu do desktop abre no passar do mouse **e** ao receber foco pelo
+teclado, só com CSS. Enquanto fechado ele usa `invisible`, então os links de
+dentro ficam fora da ordem de tabulação até o item de cima ser focado.
+
+Os endereços levam barra no fim (`/loja/`) porque o Astro gera cada página
+como diretório. Sem a barra o Apache responde um 301 antes de servir.
 
 ## Publicação
 
