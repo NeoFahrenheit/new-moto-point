@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import { especialidades, fotos } from '../data/servicos';
+import { zap } from '../data/site';
+
+// A lista se divide em torno da foto central: três à esquerda, duas à direita.
+const esquerda = especialidades.slice(0, 3);
+const direita = especialidades.slice(3);
+---
+
+<section id="oficina" class="relative overflow-hidden bg-tinta-950 py-20 lg:py-28">
+  <div class="absolute -bottom-40 -left-32 size-[34rem] rounded-full bg-ambar-600/10 blur-[150px]"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <p class="rotulo flex items-center justify-center gap-3 text-[10px] text-ambar-400">
+        <span class="block h-px w-8 bg-ambar-500"></span>
+        Mão de obra certificada
+      </p>
+      <h2 class="display mt-5 text-[2.1rem] text-white sm:text-5xl">
+        Também resolvemos o que a maioria <span class="text-ambar-400 italic">manda para fora</span>
+      </h2>
+      <p class="mx-auto mt-6 max-w-xl text-[15px] leading-relaxed text-white/55">
+        Mecânicos com formação SENAC RS. Se sua moto precisa de diagnóstico, traga na Farrapos que
+        a gente abre e mostra o problema antes de trocar qualquer peça.
+      </p>
+    </div>
+
+    <!-- Lista dividida em torno da foto torta -->
+    <div class="mt-16 grid items-center gap-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-14">
+      <ul class="reveal divide-y divide-white/12 lg:text-right">
+        {
+          esquerda.map((e) => (
+            <li class="flex items-center gap-4 py-5 lg:flex-row-reverse">
+              <Icone nome={e.icone} class="size-6 shrink-0 text-ambar-400" />
+              <span class="display flex-1 text-2xl text-white lg:text-[1.75rem]">{e.nome}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <figure class="reveal mx-auto w-full max-w-xs" style="--reveal-delay:120ms">
+        <div class="foto-torta overflow-hidden border-8 border-creme-50 shadow-2xl shadow-black/50">
+          <Image
+            src={fotos.oficina}
+            alt="Motor aberto na bancada da oficina da New Moto Point"
+            widths={[300, 500, 700]}
+            sizes="(min-width: 1024px) 20rem, 80vw"
+            loading="lazy"
+            decoding="async"
+            class="aspect-3/4 w-full object-cover"
+          />
+        </div>
+      </figure>
+
+      <ul class="reveal divide-y divide-white/12" style="--reveal-delay:180ms">
+        {
+          direita.map((e) => (
+            <li class="flex items-center gap-4 py-5">
+              <Icone nome={e.icone} class="size-6 shrink-0 text-ambar-400" />
+              <span class="display flex-1 text-2xl text-white lg:text-[1.75rem]">{e.nome}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="reveal mt-14 text-center">
+      <a
+        href={zap('Olá! Preciso de um diagnóstico na oficina da New Moto Point. Minha moto é uma ')}
+        target="_blank"
+        rel="noopener"
+        class="group inline-flex items-center gap-2.5 rounded-full bg-ambar-400 px-8 py-4 font-semibold text-tinta-950 transition-all hover:bg-ambar-300"
+      >
+        <Icone nome="whatsapp" class="size-5" />
+        Descrever o problema
+        <Icone
+          nome="seta"
+          class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"
+        />
+      </a>
+    </div>
+  </div>
+</section>

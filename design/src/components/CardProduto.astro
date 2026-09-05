@@ -6,39 +6,38 @@ import { zapProduto } from '../data/site';
 
 interface Props {
   produto: Produto;
-  /** Cartão claro (fundo branco) ou escuro. */
+  /** Cartão claro (padrão) ou sobre fundo escuro. */
   tema?: 'claro' | 'escuro';
   atraso?: number;
 }
 
-const { produto: p, tema = 'escuro', atraso = 0 } = Astro.props;
+const { produto: p, tema = 'claro', atraso = 0 } = Astro.props;
 
 const off = desconto(p);
 const precoFmt = p.preco ? moeda.format(p.preco) : null;
-const claro = tema === 'claro';
+const escuro = tema === 'escuro';
 const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), precoFmt ?? undefined);
+const rotuloBotao = precoFmt ? `Quero este: ${p.nome}` : `Pedir orçamento de ${p.nome}`;
 ---
 
 <article
   class:list={[
-    'reveal group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300',
-    claro
-      ? 'border-graphite-900/10 bg-white hover:border-moto-500/40 hover:shadow-2xl hover:shadow-graphite-900/10'
-      : 'border-white/8 bg-graphite-850 hover:border-moto-500/50 hover:bg-graphite-800',
+    'reveal group relative flex flex-col border transition-all duration-300',
+    escuro
+      ? 'border-white/12 bg-tinta-900 hover:border-ambar-400/60'
+      : 'border-tinta-950/12 bg-white hover:border-ambar-400',
   ]}
   style={atraso ? `--reveal-delay:${atraso}ms` : undefined}
 >
   {
     off !== null && (
-      <span
-        class="absolute top-3 left-3 z-10 rounded-full bg-moto-500 px-2.5 py-1 text-[11px] font-extrabold tracking-wide text-white shadow-lg shadow-moto-700/30"
-      >
+      <span class="absolute top-3 left-3 z-10 rounded-full bg-ambar-400 px-2.5 py-1 text-[11px] font-bold text-tinta-950">
         −{off}%
       </span>
     )
   }
 
-  <!-- Foto sempre em fundo claro: os produtos foram fotografados em estúdio branco -->
+  <!-- Foto sempre em fundo branco: os produtos foram fotografados em estúdio -->
   <div class="relative aspect-square overflow-hidden bg-white p-4">
     <Image
       src={p.img}
@@ -47,7 +46,7 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
       sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 80vw"
       loading="lazy"
       decoding="async"
-      class="size-full object-contain transition-transform duration-500 ease-out-quint group-hover:scale-[1.07]"
+      class="size-full object-contain transition-transform duration-500 ease-out-quint group-hover:scale-[1.06]"
     />
   </div>
 
@@ -55,81 +54,80 @@ const href = zapProduto(p.nome + (p.tamanhos ? ` — tam. ${p.tamanhos}` : ''), 
     <div class="flex-1">
       {
         p.marca && (
-          <p
-            class:list={[
-              'text-[10.5px] font-bold tracking-[0.2em] uppercase',
-              claro ? 'text-graphite-500' : 'text-white/40',
-            ]}
-          >
+          <p class:list={['rotulo text-[9px]', escuro ? 'text-white/40' : 'text-tinta-400']}>
             {p.marca}
           </p>
         )
       }
       <h3
         class:list={[
-          'mt-1 text-[15px] leading-snug font-semibold',
-          claro ? 'text-graphite-900' : 'text-white',
+          'mt-1.5 text-[15px] leading-snug font-semibold',
+          escuro ? 'text-white' : 'text-tinta-950',
         ]}
       >
         {p.nome}
       </h3>
       {
         p.tamanhos && (
-          <p class:list={['mt-1.5 text-xs', claro ? 'text-graphite-500' : 'text-white/45']}>
+          <p class:list={['mt-1.5 text-xs', escuro ? 'text-white/45' : 'text-tinta-400']}>
             Tam. {p.tamanhos}
           </p>
         )
       }
     </div>
 
-    <div>
-      {
-        precoFmt ? (
-          <div class="flex flex-wrap items-baseline gap-2">
-            {p.precoAntigo && (
+    <div
+      class:list={[
+        'flex items-end justify-between gap-3 border-t pt-3.5',
+        escuro ? 'border-white/12' : 'border-tinta-950/10',
+      ]}
+    >
+      <div class="min-w-0">
+        {
+          precoFmt ? (
+            <Fragment>
+              {p.precoAntigo && (
+                <span
+                  class:list={[
+                    'block text-xs line-through',
+                    escuro ? 'text-white/35' : 'text-tinta-400',
+                  ]}
+                >
+                  {moeda.format(p.precoAntigo)}
+                </span>
+              )}
               <span
                 class:list={[
-                  'text-sm line-through',
-                  claro ? 'text-graphite-500' : 'text-white/35',
+                  'display text-2xl',
+                  p.precoAntigo ? 'text-ambar-600' : escuro ? 'text-white' : 'text-tinta-950',
                 ]}
               >
-                {moeda.format(p.precoAntigo)}
+                {precoFmt}
               </span>
-            )}
+            </Fragment>
+          ) : (
             <span
-              class:list={[
-                'display text-3xl',
-                p.precoAntigo ? 'text-moto-500' : claro ? 'text-graphite-900' : 'text-white',
-              ]}
+              class:list={['text-[13px] leading-snug', escuro ? 'text-white/50' : 'text-tinta-500']}
             >
-              {precoFmt}
+              Consulte o valor
             </span>
-          </div>
-        ) : (
-          <p
-            class:list={[
-              'display text-xl',
-              claro ? 'text-graphite-700' : 'text-white/70',
-            ]}
-          >
-            Consulte o valor
-          </p>
-        )
-      }
+          )
+        }
+      </div>
 
       <a
         href={href}
         target="_blank"
         rel="noopener"
+        aria-label={rotuloBotao}
         class:list={[
-          'mt-3 flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-colors',
-          claro
-            ? 'bg-graphite-900 text-white hover:bg-zap-500 hover:text-graphite-950'
-            : 'bg-white/8 text-white hover:bg-zap-500 hover:text-graphite-950',
+          'flex size-10 shrink-0 items-center justify-center rounded-full border transition-all duration-300',
+          escuro
+            ? 'border-white/20 text-white/70 hover:border-zap-500 hover:bg-zap-500 hover:text-tinta-950'
+            : 'border-tinta-950/20 text-tinta-600 hover:border-zap-500 hover:bg-zap-500 hover:text-tinta-950',
         ]}
       >
         <Icone nome="whatsapp" class="size-4.5" />
-        {precoFmt ? 'Quero este' : 'Pedir orçamento'}
       </a>
     </div>
   </div>

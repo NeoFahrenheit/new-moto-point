@@ -2,143 +2,107 @@
 import { Image } from 'astro:assets';
 import Icone from './Icone.astro';
 import { fotos } from '../data/servicos';
-import { site, contato, marcas, zap } from '../data/site';
-
-const numeros = [
-  { valor: `${new Date().getFullYear() - site.desde}+`, rotulo: 'anos na Farrapos' },
-  { valor: '3 em 1', rotulo: 'peça, acessório e oficina' },
-  { valor: '5', rotulo: 'marcas atendidas' },
-];
+import { site, contato, zap } from '../data/site';
 ---
 
-<section class="relative isolate overflow-hidden bg-graphite-950">
-  <!-- Foto de fundo: bancada da própria oficina -->
-  <div class="absolute inset-0 -z-20">
-    <Image
-      src={fotos.manutencao}
-      alt=""
-      widths={[640, 1024, 1600]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="size-full scale-105 object-cover object-center opacity-45"
-    />
-  </div>
-
-  <!-- Camadas de escurecimento e cor de marca -->
-  <div
-    class="absolute inset-0 -z-10 bg-linear-to-r from-graphite-950 via-graphite-950/92 to-graphite-950/45"
-  >
-  </div>
-  <div
-    class="absolute inset-0 -z-10 bg-linear-to-t from-graphite-900 via-transparent to-graphite-950/70"
-  >
-  </div>
-  <div
-    class="absolute -top-32 -right-24 -z-10 hidden size-[36rem] rounded-full bg-moto-600/22 blur-[130px] lg:block"
-  >
-  </div>
-  <div class="grid-texture absolute inset-0 -z-10 opacity-40"></div>
-
-  <div class="mx-auto max-w-7xl px-4 pt-14 pb-16 sm:px-6 lg:pt-24 lg:pb-24">
-    <div class="max-w-3xl">
-      <p
-        class="reveal inline-flex items-center gap-2.5 rounded-full border border-moto-500/30 bg-moto-500/10 py-1.5 pr-4 pl-2 text-[11px] font-bold tracking-[0.16em] text-moto-300 uppercase"
-      >
-        <span class="rounded-full bg-moto-500 px-2 py-0.5 text-white">Desde {site.desde}</span>
-        Porto Alegre · <span class="hidden sm:inline">Bairro </span>Floresta
-      </p>
-
-      <h1 class="reveal display mt-6 text-white" style="--reveal-delay:80ms">
-        <span class="block text-[11.5vw] leading-[0.86] sm:text-6xl lg:text-8xl">
-          Não fique rodando
-        </span>
-        <span class="block text-[11.5vw] leading-[0.86] sm:text-6xl lg:text-8xl">
-          por aí. Vai direto
-        </span>
-        <span
-          class="mt-1.5 block text-[11.5vw] leading-[0.86] text-moto-500 italic sm:text-6xl lg:text-8xl"
-        >
-          em quem entende.
-        </span>
-      </h1>
-
-      <p
-        class="reveal mt-7 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg"
-        style="--reveal-delay:160ms"
-      >
-        Peça, acessório, roupa de moto e oficina no mesmo endereço. Mão de obra certificada <strong
-          class="font-semibold text-white">SENAC RS</strong
-        >, orçamento na hora pelo WhatsApp e <strong class="font-semibold text-white"
-          >tele entrega</strong
-        > na região.
-      </p>
-
-      <div class="reveal mt-9 flex flex-col gap-3 sm:flex-row" style="--reveal-delay:220ms">
-        <a
-          href={zap('Olá! Quero um orçamento na New Moto Point. Minha moto é uma ')}
-          target="_blank"
-          rel="noopener"
-          class="group flex items-center justify-center gap-2.5 rounded-xl bg-zap-500 px-7 py-4 font-bold text-graphite-950 shadow-xl shadow-zap-500/20 transition-all hover:bg-zap-400 hover:shadow-zap-500/35"
-        >
-          <Icone nome="whatsapp" class="size-5.5" />
-          Pedir orçamento agora
-          <Icone
-            nome="seta"
-            class="size-5 transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </a>
-        <a
-          href="#oficina"
-          class="flex items-center justify-center gap-2.5 rounded-xl border border-white/18 px-7 py-4 font-bold text-white backdrop-blur-sm transition-all hover:border-moto-500 hover:bg-moto-500/12"
-        >
-          <Icone nome="ferramentas" class="size-5" />
-          Serviços da oficina
-        </a>
-      </div>
-
-      <p class="reveal mt-6 text-sm text-white/45" style="--reveal-delay:280ms">
-        Ou ligue para <a
-          href={contato.telefoneFixoHref}
-          class="font-semibold text-white underline decoration-moto-500 decoration-2 underline-offset-4 transition-colors hover:text-moto-400"
-          >{contato.telefoneFixo}</a
-        > — atendemos de segunda a sábado.
-      </p>
+<section class="relative">
+  <!-- Faixa preta de abertura. A altura vem do conteúdo, e a foto abaixo
+       sobe por cima dela com margem negativa — nada de altura fixa. -->
+  <div class="relative overflow-hidden bg-tinta-950 pt-14 pb-28 lg:pt-20 lg:pb-40">
+    <div
+      class="absolute -top-32 -right-32 size-[36rem] rounded-full bg-ambar-600/12 blur-[140px]"
+    >
     </div>
 
-    <!-- Números e marcas -->
     <div
-      class="reveal mt-14 grid gap-8 border-t border-white/10 pt-9 sm:grid-cols-2 lg:mt-20 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-14"
-      style="--reveal-delay:340ms"
+      class="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-14"
     >
-      <dl class="flex gap-8 sm:gap-10">
-        {
-          numeros.map((n) => (
-            <div>
-              <dt class="sr-only">{n.rotulo}</dt>
-              <dd>
-                <span class="display block text-4xl text-white lg:text-5xl">{n.valor}</span>
-                <span class="mt-1 block text-[11px] font-bold tracking-[0.16em] text-white/40 uppercase">
-                  {n.rotulo}
-                </span>
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
-
-      <div class="lg:border-l lg:border-white/10 lg:pl-14">
-        <p class="text-[11px] font-bold tracking-[0.22em] text-white/35 uppercase">
-          Trabalhamos com
+      <div>
+        <p class="reveal rotulo flex items-center gap-3 text-[10px] text-ambar-400">
+          <span class="block h-px w-8 bg-ambar-500"></span>
+          Desde {site.desde} · Av. Farrapos · Porto Alegre
         </p>
-        <div class="mt-3 flex flex-wrap gap-2">
-          {
-            marcas.map((m) => (
-              <span class="display rounded-lg border border-white/12 bg-white/4 px-3.5 py-1.5 text-lg tracking-wider text-white/75">
-                {m}
-              </span>
-            ))
-          }
+
+        <h1
+          class="reveal display mt-7 text-[2.6rem] text-white sm:text-6xl lg:text-7xl"
+          style="--reveal-delay:80ms"
+        >
+          Não fique rodando por aí.
+          <span class="block text-ambar-400 italic">Vai direto em quem entende.</span>
+        </h1>
+      </div>
+
+      <div class="reveal lg:pb-3" style="--reveal-delay:150ms">
+        <p class="max-w-md text-[15px] leading-relaxed text-white/60 sm:text-base">
+          Peça, acessório, roupa de moto e oficina no mesmo endereço. Mão de obra certificada <strong
+            class="font-semibold text-white">SENAC RS</strong
+          >, orçamento na hora pelo WhatsApp e <strong class="font-semibold text-white"
+            >tele entrega</strong
+          > na região.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={zap('Olá! Quero um orçamento na New Moto Point. Minha moto é uma ')}
+            target="_blank"
+            rel="noopener"
+            class="group flex items-center justify-center gap-2.5 rounded-full bg-ambar-400 px-7 py-3.5 font-semibold text-tinta-950 transition-all hover:bg-ambar-300"
+          >
+            <Icone nome="whatsapp" class="size-5" />
+            Pedir orçamento
+            <Icone
+              nome="seta"
+              class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </a>
+          <a
+            href="#servicos"
+            class="flex items-center justify-center gap-2.5 rounded-full border border-white/25 px-7 py-3.5 font-semibold text-white transition-all hover:border-ambar-400 hover:text-ambar-300"
+          >
+            Ver os serviços
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Foto atravessando a borda entre o preto e o papel -->
+  <div class="bg-creme-50">
+    <div class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24">
+      <div class="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16">
+        <figure class="reveal -mt-20 lg:-mt-32">
+          <div class="overflow-hidden">
+            <Image
+              src={fotos.manutencao}
+              alt="Mecânico da New Moto Point fazendo manutenção em uma moto na oficina da Av. Farrapos"
+              widths={[600, 1000, 1400]}
+              sizes="(min-width: 1024px) 52vw, 100vw"
+              loading="eager"
+              fetchpriority="high"
+              class="aspect-16/11 w-full object-cover"
+            />
+          </div>
+          <figcaption class="mt-3 text-xs text-tinta-400">
+            Bancada da oficina — Av. Farrapos, 1255, esquina com a Rua Hoffmann.
+          </figcaption>
+        </figure>
+
+        <div class="reveal" style="--reveal-delay:120ms">
+          <h2 class="display text-3xl text-tinta-950 sm:text-4xl lg:text-[2.75rem]">
+            Três negócios <span class="text-ambar-500 italic">no mesmo balcão.</span>
+          </h2>
+          <p class="mt-5 text-[15px] leading-relaxed text-tinta-500">
+            Você chega com a moto, resolve a peça, escolhe o acessório e sai com o serviço feito.
+            Sem rodar a cidade atrás de fornecedor, sem voltar outro dia.
+          </p>
+
+          <p class="mt-7 text-sm text-tinta-500">
+            Ou ligue para <a
+              href={contato.telefoneFixoHref}
+              class="font-semibold text-tinta-950 underline decoration-ambar-500 decoration-2 underline-offset-4 transition-colors hover:text-ambar-600"
+              >{contato.telefoneFixo}</a
+            > — atendemos de segunda a sábado.
+          </p>
         </div>
       </div>
     </div>

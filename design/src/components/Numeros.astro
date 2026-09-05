@@ -1,0 +1,63 @@
+---
+import Icone from './Icone.astro';
+import { diferenciais } from '../data/servicos';
+import { site } from '../data/site';
+
+const anos = new Date().getFullYear() - site.desde;
+
+const numeros = [
+  { valor: `${anos}`, rotulo: 'anos na Av. Farrapos' },
+  { valor: '5', rotulo: 'marcas atendidas' },
+  { valor: '3 em 1', rotulo: 'peça, acessório e oficina' },
+];
+---
+
+<section class="border-y border-tinta-950/10 bg-creme-50 py-16 lg:py-24" aria-label="A loja em números">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
+      <div class="reveal">
+        <h2 class="display text-[2rem] text-tinta-950 sm:text-4xl lg:text-[2.75rem]">
+          A gente vive de moto — <span class="text-ambar-500 italic">não de promessa.</span>
+        </h2>
+        <p class="mt-5 max-w-lg text-[15px] leading-relaxed text-tinta-500">
+          Loja aberta na mesma esquina desde {site.desde}, atendendo quem usa a moto para
+          trabalhar. O orçamento sai antes do serviço, e o que foi trocado a gente mostra.
+        </p>
+      </div>
+
+      <dl class="reveal grid grid-cols-3 gap-6 sm:gap-8" style="--reveal-delay:100ms">
+        {
+          numeros.map((n) => (
+            <div>
+              <dt class="sr-only">{n.rotulo}</dt>
+              <dd>
+                <span class="display block text-4xl text-ambar-500 sm:text-5xl">{n.valor}</span>
+                <span class="mt-2.5 block text-[13px] leading-snug text-tinta-500">
+                  {n.rotulo}
+                </span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <!-- Diferenciais em fio de régua -->
+    <ul class="mt-14 grid border-t border-tinta-950/12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+      {
+        diferenciais.map((d, i) => (
+          <li
+            class="reveal flex gap-4 border-b border-tinta-950/12 py-7 sm:border-r sm:px-7 sm:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
+            style={`--reveal-delay:${i * 70}ms`}
+          >
+            <Icone nome={d.icone} class="mt-0.5 size-6 shrink-0 text-ambar-500" />
+            <div>
+              <h3 class="display text-xl text-tinta-950">{d.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-tinta-500">{d.texto}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

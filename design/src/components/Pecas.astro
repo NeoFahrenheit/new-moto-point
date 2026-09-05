@@ -8,102 +8,96 @@ import { marcas, zap } from '../data/site';
 const oleos = vitrines.find((v) => v.id === 'oleos')!;
 ---
 
-<section id="pecas" class="bg-white py-20 lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+<section id="pecas" class="relative overflow-hidden bg-tinta-950 py-20 lg:py-28">
+  <div class="absolute -top-32 -right-32 size-[34rem] rounded-full bg-ambar-600/10 blur-[150px]"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
     <TituloSecao
-      claro
+      escuro
       sobretitulo="Peças de reposição"
       titulo="Peça original ou de reposição,"
       destaque="para as cinco marcas."
       texto="Se a peça não estiver no estoque, a gente procura e avisa o prazo. Sem fazer você rodar a cidade atrás de fornecedor."
     />
 
-    <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-14">
-      <!-- Linhas atendidas -->
+    <div class="mt-14 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <!-- Linhas atendidas, em fio de régua -->
       <div>
-        <div class="reveal rounded-2xl border border-graphite-900/10 bg-graphite-50 p-7">
-          <h3 class="display text-2xl tracking-wide text-graphite-900">O que temos em estoque</h3>
-          <ul class="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
-            {
-              linhasDePecas.map((l) => (
-                <li class="flex items-start gap-2.5 text-sm text-graphite-700">
-                  <Icone nome="check" class="mt-0.5 size-4 shrink-0 text-moto-500" />
-                  {l}
-                </li>
-              ))
-            }
-          </ul>
+        <h3 class="reveal display text-2xl text-white sm:text-3xl">O que temos em estoque</h3>
 
-          <div class="mt-7 border-t border-graphite-900/10 pt-6">
-            <p class="text-[11px] font-bold tracking-[0.2em] text-graphite-500 uppercase">
-              Atendemos
-            </p>
-            <div class="mt-3 flex flex-wrap gap-2">
-              {
-                marcas.map((m) => (
-                  <span class="display rounded-lg bg-graphite-900 px-3.5 py-1.5 text-lg tracking-wider text-white">
-                    {m}
-                  </span>
-                ))
-              }
-            </div>
+        <ul class="reveal mt-7 grid gap-x-10 sm:grid-cols-2">
+          {
+            linhasDePecas.map((l) => (
+              <li class="flex items-center gap-3 border-b border-white/12 py-3 text-sm text-white/70">
+                <Icone nome="check" class="size-4 shrink-0 text-ambar-400" />
+                {l}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="reveal mt-9">
+          <p class="rotulo text-[10px] text-white/40">Atendemos</p>
+          <div class="mt-4 flex flex-wrap gap-x-7 gap-y-3">
+            {marcas.map((m) => <span class="display text-2xl text-white/70">{m}</span>)}
           </div>
-
-          <a
-            href={zap(
-              'Olá! Estou procurando uma peça. Modelo da moto: ___ / Peça: ___. Vocês têm?',
-            )}
-            target="_blank"
-            rel="noopener"
-            class="group mt-7 flex items-center justify-center gap-2.5 rounded-xl bg-moto-500 px-6 py-4 font-bold text-white shadow-lg shadow-moto-700/20 transition-all hover:bg-moto-600"
-          >
-            <Icone nome="whatsapp" class="size-5" />
-            Consultar uma peça
-            <Icone
-              nome="seta"
-              class="size-5 transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </a>
         </div>
 
-        <div
-          class="reveal mt-5 flex items-start gap-3.5 rounded-2xl bg-graphite-900 p-6 text-white"
+        <a
+          href={zap('Olá! Estou procurando uma peça. Modelo da moto: ___ / Peça: ___. Vocês têm?')}
+          target="_blank"
+          rel="noopener"
+          class="reveal group mt-9 inline-flex items-center gap-2.5 rounded-full bg-ambar-400 px-7 py-3.5 font-semibold text-tinta-950 transition-all hover:bg-ambar-300"
         >
-          <span
-            class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-moto-500 text-white"
-          >
-            <Icone nome="entrega" class="size-5.5" />
-          </span>
-          <div>
-            <h4 class="display text-xl tracking-wide">Tele entrega e busca</h4>
-            <p class="mt-1.5 text-sm leading-relaxed text-white/60">
-              Levamos a peça até você ou buscamos sua moto na região. Combine a taxa no
-              atendimento.
-            </p>
-          </div>
-        </div>
+          <Icone nome="whatsapp" class="size-5" />
+          Consultar uma peça
+          <Icone
+            nome="seta"
+            class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"
+          />
+        </a>
       </div>
 
       <!-- Óleos -->
       <div>
         <div class="reveal flex items-end justify-between gap-4">
           <div>
-            <h3 class="display text-2xl tracking-wide text-graphite-900">{oleos.titulo}</h3>
-            <p class="mt-2 max-w-md text-sm leading-relaxed text-graphite-600">
-              {oleos.descricao}
-            </p>
+            <h3 class="display text-2xl text-white sm:text-3xl">{oleos.titulo}</h3>
+            <p class="mt-3 max-w-md text-sm leading-relaxed text-white/55">{oleos.descricao}</p>
           </div>
           <span
-            class="hidden shrink-0 rounded-full bg-moto-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-moto-600 uppercase sm:block"
+            class="hidden shrink-0 rounded-full border border-ambar-400/50 px-3.5 py-1.5 text-[11px] font-semibold text-ambar-300 sm:block"
           >
             Troca na hora
           </span>
         </div>
 
-        <div class="mt-6 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
-          {oleos.itens.map((p, i) => <CardProduto produto={p} tema="claro" atraso={i * 70} />)}
+        <div class="mt-7 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
+          {oleos.itens.map((p, i) => <CardProduto produto={p} tema="escuro" atraso={i * 70} />)}
         </div>
       </div>
+    </div>
+
+    <!-- Tele entrega -->
+    <div
+      class="reveal mt-14 flex flex-col items-start gap-6 border-t border-white/12 pt-10 sm:flex-row sm:items-center"
+    >
+      <Icone nome="entrega" class="size-9 shrink-0 text-ambar-400" />
+      <div class="flex-1">
+        <h3 class="display text-2xl text-white">Tele entrega e busca da moto</h3>
+        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-white/55">
+          Levamos a peça até você ou buscamos sua moto na região. Combine a taxa no atendimento.
+        </p>
+      </div>
+      <a
+        href={zap('Olá! Quero saber sobre tele entrega / busca da moto na região.')}
+        target="_blank"
+        rel="noopener"
+        class="flex shrink-0 items-center gap-2.5 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-ambar-400 hover:bg-ambar-400 hover:text-tinta-950"
+      >
+        <Icone nome="whatsapp" class="size-4.5" />
+        Combinar entrega
+      </a>
     </div>
   </div>
 </section>

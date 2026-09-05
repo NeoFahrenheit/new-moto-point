@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import TituloSecao from './TituloSecao.astro';
+import { servicos } from '../data/servicos';
+import { zap, zapServico } from '../data/site';
+---
+
+<!-- Serviços em linhas de régua: o bloco que dá o tom editorial da página. -->
+<section id="servicos" class="bg-creme-50 py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <TituloSecao
+        sobretitulo="Oficina própria"
+        titulo="O que a gente resolve"
+        destaque="na bancada"
+        texto="Você aprova o orçamento da peça e da mão de obra antes de qualquer coisa ser desmontada."
+      />
+
+      <a
+        href={zap('Olá! Quero agendar um serviço na oficina da New Moto Point.')}
+        target="_blank"
+        rel="noopener"
+        class="reveal inline-flex shrink-0 items-center gap-2.5 self-start rounded-full border border-tinta-950/20 px-6 py-3 text-sm font-semibold text-tinta-950 transition-all hover:border-ambar-500 hover:bg-ambar-400 lg:self-auto"
+      >
+        <Icone nome="whatsapp" class="size-4.5 text-ambar-600" />
+        Agendar um horário
+      </a>
+    </div>
+
+    <ul class="mt-14 border-t border-tinta-950/14">
+      {
+        servicos.map((s, i) => (
+          <li class="fio reveal group" style={`--reveal-delay:${i * 60}ms`}>
+            <a
+              href={zapServico(s.nome)}
+              target="_blank"
+              rel="noopener"
+              class="flex items-center gap-5 py-7 lg:gap-10"
+            >
+              <span class="rotulo hidden w-8 shrink-0 text-[10px] text-tinta-400 sm:block">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+
+              <div class="min-w-0 flex-1">
+                <h3
+                  class:list={[
+                    'display text-2xl transition-colors sm:text-[1.75rem]',
+                    s.destaque
+                      ? 'text-ambar-600 group-hover:text-ambar-500'
+                      : 'text-tinta-950 group-hover:text-ambar-600',
+                  ]}
+                >
+                  {s.nome}
+                </h3>
+                <p class="mt-2 max-w-2xl text-sm leading-relaxed text-tinta-500">{s.resumo}</p>
+              </div>
+
+              {s.img && (
+                <div class="hidden shrink-0 lg:block">
+                  <div class="foto-torta overflow-hidden border-4 border-white shadow-lg shadow-tinta-950/10 transition-transform duration-500 ease-out-quint group-hover:rotate-0">
+                    <Image
+                      src={s.img}
+                      alt=""
+                      widths={[200, 320]}
+                      sizes="10rem"
+                      loading="lazy"
+                      decoding="async"
+                      class="h-24 w-40 object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <span
+                class:list={[
+                  'flex size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300',
+                  s.destaque
+                    ? 'border-ambar-400 bg-ambar-400 text-tinta-950'
+                    : 'border-tinta-950/20 text-tinta-600 group-hover:border-ambar-400 group-hover:bg-ambar-400 group-hover:text-tinta-950',
+                ]}
+                aria-hidden="true"
+              >
+                <Icone nome="setaCurta" class="size-4.5" />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="reveal mt-8 text-sm text-tinta-500">
+      Clique em qualquer serviço para abrir o WhatsApp com a mensagem de agendamento pronta.
+    </p>
+  </div>
+</section>

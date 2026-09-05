@@ -5,7 +5,8 @@ interface Props {
   destaque?: string;
   texto?: string;
   centro?: boolean;
-  claro?: boolean;
+  /** `escuro` inverte as cores para uso sobre as faixas pretas. */
+  escuro?: boolean;
 }
 
 const {
@@ -14,38 +15,39 @@ const {
   destaque,
   texto,
   centro = false,
-  claro = false,
+  escuro = false,
 } = Astro.props;
 ---
 
-<div class:list={['reveal max-w-2xl', centro && 'mx-auto text-center']}>
+<div class:list={['reveal', centro ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl']}>
   <p
     class:list={[
-      'flex items-center gap-3 text-xs font-bold tracking-[0.28em] uppercase',
+      'rotulo flex items-center gap-3 text-[10px]',
       centro && 'justify-center',
-      claro ? 'text-moto-600' : 'text-moto-500',
+      escuro ? 'text-ambar-400' : 'text-ambar-600',
     ]}
   >
-    <span class="skew-tag block h-3.5 w-1.5 bg-moto-500"></span>
+    <span class="block h-px w-8 bg-ambar-500"></span>
     {sobretitulo}
   </p>
 
   <h2
     class:list={[
-      'display mt-4 text-4xl sm:text-5xl lg:text-[3.5rem]',
-      claro ? 'text-graphite-900' : 'text-white',
+      'display mt-5 text-[2.1rem] sm:text-5xl lg:text-[3.4rem]',
+      escuro ? 'text-white' : 'text-tinta-950',
     ]}
   >
     {titulo}
-    {destaque && <span class="text-moto-500"> {destaque}</span>}
+    {destaque && <span class="text-ambar-500 italic"> {destaque}</span>}
   </h2>
 
   {
     texto && (
       <p
         class:list={[
-          'mt-5 text-[15px] leading-relaxed sm:text-base',
-          claro ? 'text-graphite-600' : 'text-white/55',
+          'mt-6 text-[15px] leading-relaxed sm:text-base',
+          centro && 'mx-auto max-w-2xl',
+          escuro ? 'text-white/55' : 'text-tinta-500',
         ]}
       >
         {texto}

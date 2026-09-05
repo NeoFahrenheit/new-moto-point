@@ -5,7 +5,7 @@ import { site, contato, zap } from '../data/site';
 
 const atalhos = [
   { href: '/#ofertas', rotulo: 'Ofertas da loja', icone: 'estrela' },
-  { href: '/#oficina', rotulo: 'Serviços da oficina', icone: 'ferramentas' },
+  { href: '/#servicos', rotulo: 'Serviços da oficina', icone: 'ferramentas' },
   { href: '/#pecas', rotulo: 'Peças de reposição', icone: 'motor' },
   { href: '/#acessorios', rotulo: 'Acessórios', icone: 'bau' },
   { href: '/#contato', rotulo: 'Endereço e horários', icone: 'local' },
@@ -17,19 +17,15 @@ const atalhos = [
   descricao="A página que você procurou não existe mais. Veja as ofertas, os serviços da oficina ou fale com a New Moto Point no WhatsApp."
   semIndexacao
 >
-  <section class="relative overflow-hidden bg-graphite-950">
-    <div class="grid-texture absolute inset-0 opacity-50"></div>
-    <div class="absolute -top-32 -right-24 size-[32rem] rounded-full bg-moto-700/16 blur-[130px]">
-    </div>
+  <section class="bg-creme-50">
+    <div class="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 lg:py-32">
+      <p class="display text-[22vw] leading-none text-ambar-300 sm:text-[11rem]">404</p>
 
-    <div class="relative mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 lg:py-32">
-      <p class="display text-[26vw] leading-none text-white/8 sm:text-[12rem]">404</p>
-
-      <h1 class="display -mt-6 text-4xl text-white sm:-mt-10 sm:text-6xl">
-        Essa página <span class="text-moto-500 italic">saiu de linha.</span>
+      <h1 class="display -mt-4 text-3xl text-tinta-950 sm:-mt-8 sm:text-5xl">
+        Essa página <span class="text-ambar-500 italic">saiu de linha.</span>
       </h1>
 
-      <p class="mx-auto mt-5 max-w-lg text-[15px] leading-relaxed text-white/60 sm:text-base">
+      <p class="mx-auto mt-6 max-w-lg text-[15px] leading-relaxed text-tinta-500 sm:text-base">
         O endereço que você abriu não existe mais. Mas a loja continua no mesmo lugar, na Av.
         Farrapos — escolha um atalho abaixo ou chama no WhatsApp que a gente resolve.
       </p>
@@ -37,7 +33,7 @@ const atalhos = [
       <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
         <a
           href="/"
-          class="group flex items-center justify-center gap-2.5 rounded-xl bg-moto-500 px-7 py-4 font-bold text-white shadow-lg shadow-moto-700/30 transition-all hover:bg-moto-600"
+          class="group flex items-center justify-center gap-2.5 rounded-full bg-tinta-950 px-7 py-4 font-semibold text-white transition-all hover:bg-ambar-400 hover:text-tinta-950"
         >
           <Icone nome="moto" class="size-5.5" />
           Voltar para a página inicial
@@ -46,33 +42,36 @@ const atalhos = [
           href={zap('Olá! Caí numa página que não existe no site. Preciso de ajuda com: ')}
           target="_blank"
           rel="noopener"
-          class="flex items-center justify-center gap-2.5 rounded-xl bg-zap-500 px-7 py-4 font-bold text-graphite-950 shadow-lg shadow-zap-500/20 transition-all hover:bg-zap-400"
+          class="flex items-center justify-center gap-2.5 rounded-full border border-tinta-950/20 px-7 py-4 font-semibold text-tinta-950 transition-all hover:border-zap-500 hover:bg-zap-500"
         >
           <Icone nome="whatsapp" class="size-5.5" />
           Falar no WhatsApp
         </a>
       </div>
 
-      <ul class="mt-12 flex flex-wrap justify-center gap-2.5">
+      <ul class="mx-auto mt-14 max-w-md border-t border-tinta-950/14 text-left">
         {
           atalhos.map((a) => (
-            <li>
-              <a
-                href={a.href}
-                class="flex items-center gap-2 rounded-lg border border-white/12 bg-white/4 px-4 py-2.5 text-sm font-semibold text-white/75 transition-all hover:border-moto-500/50 hover:bg-moto-500/10 hover:text-white"
-              >
-                <Icone nome={a.icone} class="size-4.5 text-moto-400" />
-                {a.rotulo}
+            <li class="fio group">
+              <a href={a.href} class="flex items-center gap-4 py-4">
+                <Icone nome={a.icone} class="size-5 shrink-0 text-ambar-500" />
+                <span class="display flex-1 text-xl text-tinta-950 transition-colors group-hover:text-ambar-600">
+                  {a.rotulo}
+                </span>
+                <Icone
+                  nome="setaCurta"
+                  class="size-4.5 text-tinta-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ambar-600"
+                />
               </a>
             </li>
           ))
         }
       </ul>
 
-      <p class="mt-10 text-sm text-white/40">
+      <p class="mt-10 text-sm text-tinta-500">
         Ou ligue para <a
           href={contato.telefoneFixoHref}
-          class="font-semibold text-white underline decoration-moto-500 decoration-2 underline-offset-4 transition-colors hover:text-moto-400"
+          class="font-semibold text-tinta-950 underline decoration-ambar-500 decoration-2 underline-offset-4 transition-colors hover:text-ambar-600"
           >{contato.telefoneFixo}</a
         >.
       </p>
